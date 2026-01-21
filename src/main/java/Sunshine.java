@@ -15,29 +15,36 @@ public class Sunshine {
         Scanner scanner = new Scanner(System.in);
         Task[] list = new Task[100];
         int task_count = 0;
-        while (true) {
-            String cmd = scanner.nextLine();
-            if (cmd.equals("bye")) {
-                break;
-            } else if (cmd.equals("list")) {
-                System.out.print(line);
-                for (int i = 0; i < task_count; i++) {
-                    System.out.println("\t " + (i+1) + "." + list[i]);
-                }
-                System.out.println(line);
-            } else {
-                list[task_count] = new Task(cmd);
-                task_count++;
-                System.out.println(line +
-                        "\t added: " + cmd + "\n" +
-                        line);
+        boolean exit = false;
+        do {
+            String input = scanner.nextLine();
+            String[] parts = input.split("\\s+", 2);
+            String cmd = parts[0];
+            String arg = (parts.length == 2) ? parts[1] : "";
+            switch (cmd) {
+                case ("bye"):
+                    exit = true;
+                    break;
+                case ("list"):
+                    System.out.print(line);
+                    for (int i = 0; i < task_count; i++) {
+                        System.out.println("\t " + (i + 1) + "." + list[i]);
+                    }
+                    System.out.println(line);
+                    break;
+                default:
+                    list[task_count] = new Task(cmd);
+                    task_count++;
+                    System.out.println(line +
+                            "\t added: " + cmd + "\n" +
+                            line);
             }
-        }
+        } while (!exit);
 
-        // Farewell
-        String farewell = line +
-                "\t Bye. Hope to see you again soon!\n" +
-                line;
-        System.out.println(farewell);
+            // Farewell
+            String farewell = line +
+                    "\t Bye. Hope to see you again soon!\n" +
+                    line;
+            System.out.println(farewell);
     }
 }
