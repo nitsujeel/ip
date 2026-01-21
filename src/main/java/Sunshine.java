@@ -33,10 +33,11 @@ public class Sunshine {
                     System.out.println(line);
                     break;
                 default:
-                    list[taskCount] = new Task(cmd);
+                    String taskName = cmd + " " + arg;
+                    list[taskCount] = new Task(taskName);
                     taskCount++;
                     System.out.println(line +
-                            "\t added: " + cmd + "\n" +
+                            "\t added: " + taskName + "\n" +
                             line);
             }
         } while (!exit);
