@@ -14,7 +14,7 @@ public class Sunshine {
         // Main loop
         Scanner scanner = new Scanner(System.in);
         Task[] list = new Task[100];
-        int task_count = 0;
+        int taskCount = 0;
         boolean exit = false;
         do {
             String input = scanner.nextLine();
@@ -27,14 +27,14 @@ public class Sunshine {
                     break;
                 case ("list"):
                     System.out.print(line);
-                    for (int i = 0; i < task_count; i++) {
+                    for (int i = 0; i < taskCount; i++) {
                         System.out.println("\t " + (i + 1) + "." + list[i]);
                     }
                     System.out.println(line);
                     break;
                 default:
-                    list[task_count] = new Task(cmd);
-                    task_count++;
+                    list[taskCount] = new Task(cmd);
+                    taskCount++;
                     System.out.println(line +
                             "\t added: " + cmd + "\n" +
                             line);
