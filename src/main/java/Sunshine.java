@@ -2,27 +2,39 @@ import java.util.Scanner;
 
 public class Sunshine {
     public static void main(String[] args) {
-        String welcome = "    ____________________________________________________________\n" +
+        String line = "    ____________________________________________________________\n";
+        String welcome = line +
                 "    Hello! I'm Sunshine\n" +
                 "    What can I do for you?\n" +
-                "    ____________________________________________________________\n";
+                line;
 
         System.out.println(welcome);
 
         Scanner scanner = new Scanner(System.in);
+        String[] list = new String[100];
+        int task_count = 0;
         while (true) {
             String cmd = scanner.nextLine();
             if (cmd.equals("bye")) {
                 break;
+            } else if (cmd.equals("list")) {
+                System.out.print(line);
+                for (int i = 0; i < task_count; i++) {
+                    System.out.println("    " + (i+1) + ". " + list[i]);
+                }
+                System.out.println(line);
+            } else {
+                list[task_count] = cmd;
+                task_count++;
+                System.out.println(line +
+                        "    added: " + cmd + "\n" +
+                        line);
             }
-            System.out.println("    ____________________________________________________________\n" +
-                    "    " + cmd + "\n" +
-                    "    ____________________________________________________________\n");
         }
 
-        String farewell = "    ____________________________________________________________\n" +
+        String farewell = line +
                 "     Bye. Hope to see you again soon!\n" +
-                "    ____________________________________________________________\n";
+                line;
         System.out.println(farewell);
     }
 }
