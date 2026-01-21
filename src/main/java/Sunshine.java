@@ -2,16 +2,18 @@ import java.util.Scanner;
 
 public class Sunshine {
     public static void main(String[] args) {
+
+        // Welcome
         String line = "    ____________________________________________________________\n";
         String welcome = line +
                 "    Hello! I'm Sunshine\n" +
                 "    What can I do for you?\n" +
                 line;
-
         System.out.println(welcome);
 
+        // Main loop
         Scanner scanner = new Scanner(System.in);
-        String[] list = new String[100];
+        Task[] list = new Task[100];
         int task_count = 0;
         while (true) {
             String cmd = scanner.nextLine();
@@ -24,7 +26,7 @@ public class Sunshine {
                 }
                 System.out.println(line);
             } else {
-                list[task_count] = cmd;
+                list[task_count] = new Task(cmd);
                 task_count++;
                 System.out.println(line +
                         "    added: " + cmd + "\n" +
@@ -32,6 +34,7 @@ public class Sunshine {
             }
         }
 
+        // Farewell
         String farewell = line +
                 "     Bye. Hope to see you again soon!\n" +
                 line;
