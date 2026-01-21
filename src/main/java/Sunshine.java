@@ -32,6 +32,22 @@ public class Sunshine {
                     }
                     System.out.println(line);
                     break;
+                case ("mark"):
+                    int indexMark = Integer.parseInt(arg);
+                    list[indexMark-1].mark();
+                    System.out.println(line +
+                            "\t Nice! I've marked this task as done:\n\t   " +
+                            list[indexMark-1] + "\n" +
+                            line);
+                    break;
+                case ("unmark"):
+                    int indexUnmark = Integer.parseInt(arg);
+                    list[indexUnmark-1].unmark();
+                    System.out.println(line +
+                            "\t OK, I've marked this task as not done yet:\n\t   " +
+                            list[indexUnmark-1] + "\n" +
+                            line);
+                    break;
                 default:
                     String taskName = cmd + " " + arg;
                     list[taskCount] = new Task(taskName);
