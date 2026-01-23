@@ -58,6 +58,17 @@ public class Sunshine {
                             "\t Now you have " + taskCount + " tasks in the list.\n" +
                             line);
                     break;
+                case ("deadline"):
+                    String[] dlSplit = arg.split(" /by ");
+                    Deadline dl = new Deadline(dlSplit[0], dlSplit[1]);
+                    list[taskCount] = dl;
+                    taskCount++;
+                    System.out.println(line +
+                            "\t Got it. I've added this task:\n " +
+                            "\t " + dl + "\n" +
+                            "\t Now you have " + taskCount + " tasks in the list.\n" +
+                            line);
+                    break;
                 default:
                     String taskName = cmd + " " + arg;
                     list[taskCount] = new Task(taskName);
