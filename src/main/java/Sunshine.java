@@ -115,6 +115,20 @@ public class Sunshine {
                     taskCount++;
                     e.addSuccess(taskCount);
                     break;
+                case("delete"):
+                    int indexDelete = Integer.parseInt(arg);
+                    Task task = list[indexDelete-1];
+                    for (int i = indexDelete; i < taskCount; i++) {
+                        list[i-1] = list[i];
+                    }
+                    list[taskCount-1] = null;
+                    taskCount--;
+                    System.out.println(line +
+                            "\t You bum. I've removed this task:\n" +
+                            "\t   " + task + "\n" +
+                            "\t Now you have " + taskCount + " tasks in the list.\n" +
+                            line);
+                    break;
                 default:
                     System.out.println(line +
                             "\t Huh? I don't gets.\n" +
