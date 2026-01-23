@@ -24,7 +24,7 @@ public class Task {
         this.isDone = false;
     }
 
-    private void addSuccess(int taskCount) {
+    public void addSuccess(int taskCount) {
 
         String line = "\t____________________________________________________________\n";
 
