@@ -51,6 +51,16 @@ public class Sunshine {
                             line);
                     break;
                 case ("todo"):
+                    try {
+                        if (arg.isEmpty()) {
+                            throw new IllegalArgumentException("BURUH!! A todo must come with a description.");
+                        }
+                    } catch (IllegalArgumentException e) {
+                        System.out.println(line +
+                                "\t " + e.getMessage() + "\n" +
+                                line);
+                        break;
+                    }
                     ToDo todo = new ToDo(arg);
                     list[taskCount] = todo;
                     taskCount++;
