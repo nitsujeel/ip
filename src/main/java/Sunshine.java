@@ -69,6 +69,18 @@ public class Sunshine {
                             "\t Now you have " + taskCount + " tasks in the list.\n" +
                             line);
                     break;
+                case ("event"):
+                    String[] eSplit1 = arg.split(" /from ");
+                    String[] eSplit2 = eSplit1[1].split(" /to ");
+                    Event e = new Event(eSplit1[0], eSplit2[0], eSplit2[1]);
+                    list[taskCount] = e;
+                    taskCount++;
+                    System.out.println(line +
+                            "\t Got it. I've added this task:\n " +
+                            "\t " + e + "\n" +
+                            "\t Now you have " + taskCount + " tasks in the list.\n" +
+                            line);
+                    break;
                 default:
                     String taskName = cmd + " " + arg;
                     list[taskCount] = new Task(taskName);
