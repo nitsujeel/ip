@@ -74,7 +74,7 @@ public class Sunshine {
                     ToDo todo;
                     try {
                         todo = new ToDo(arg);
-                    } catch (IllegalArgumentException e) {
+                    } catch (EmptyDescriptionException e) {
                         System.out.println(line +
                                 "\t " + e.getMessage() + "\n" +
                                 line);
@@ -86,7 +86,15 @@ public class Sunshine {
                     break;
                 case ("deadline"):
                     String[] dlSplit = arg.split(" /by ");
-                    Deadline dl = new Deadline(dlSplit[0], dlSplit[1]);
+                    Deadline dl;
+                    try {
+                        dl = new Deadline(dlSplit[0], dlSplit[1]);
+                    } catch (EmptyDescriptionException e) {
+                        System.out.println(line +
+                                "\t " + e.getMessage() + "\n" +
+                                line);
+                        break;
+                    }
                     list[taskCount] = dl;
                     taskCount++;
                     dl.addSuccess(taskCount);
@@ -94,7 +102,15 @@ public class Sunshine {
                 case ("event"):
                     String[] eSplit1 = arg.split(" /from ");
                     String[] eSplit2 = eSplit1[1].split(" /to ");
-                    Event e = new Event(eSplit1[0], eSplit2[0], eSplit2[1]);
+                    Event e;
+                    try {
+                        e = new Event(eSplit1[0], eSplit2[0], eSplit2[1]);
+                    } catch (EmptyDescriptionException ex) {
+                        System.out.println(line +
+                                "\t " + ex.getMessage() + "\n" +
+                                line);
+                        break;
+                    }
                     list[taskCount] = e;
                     taskCount++;
                     e.addSuccess(taskCount);

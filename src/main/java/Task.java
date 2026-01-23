@@ -2,9 +2,9 @@ public abstract class Task {
     protected String description;
     protected boolean isDone;
 
-    public Task(String description) {
+    public Task(String description) throws EmptyDescriptionException {
         if (description.isEmpty()) {
-            throw new IllegalArgumentException("BURUH!! A task must come with a description.");
+            throw new EmptyDescriptionException("BURUH!! A task must come with a description.");
         }
         this.description = description;
         this.isDone = false;
