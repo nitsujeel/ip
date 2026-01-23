@@ -54,22 +54,14 @@ public class Sunshine {
                     ToDo todo = new ToDo(arg);
                     list[taskCount] = todo;
                     taskCount++;
-                    System.out.println(line +
-                            "\t Got it. I've added this task:\n " +
-                            "\t   " + todo + "\n" +
-                            "\t Now you have " + taskCount + " tasks in the list.\n" +
-                            line);
+                    todo.addSuccess(taskCount);
                     break;
                 case ("deadline"):
                     String[] dlSplit = arg.split(" /by ");
                     Deadline dl = new Deadline(dlSplit[0], dlSplit[1]);
                     list[taskCount] = dl;
                     taskCount++;
-                    System.out.println(line +
-                            "\t Got it. I've added this task:\n " +
-                            "\t   " + dl + "\n" +
-                            "\t Now you have " + taskCount + " tasks in the list.\n" +
-                            line);
+                    dl.addSuccess(taskCount);
                     break;
                 case ("event"):
                     String[] eSplit1 = arg.split(" /from ");
@@ -77,11 +69,7 @@ public class Sunshine {
                     Event e = new Event(eSplit1[0], eSplit2[0], eSplit2[1]);
                     list[taskCount] = e;
                     taskCount++;
-                    System.out.println(line +
-                            "\t Got it. I've added this task:\n " +
-                            "\t   " + e + "\n" +
-                            "\t Now you have " + taskCount + " tasks in the list.\n" +
-                            line);
+                    e.addSuccess(taskCount);
                     break;
                 default:
                     String taskName = cmd + " " + arg;
