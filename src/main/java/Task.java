@@ -23,4 +23,15 @@ public class Task {
     public void unmark() {
         this.isDone = false;
     }
+
+    private void addSuccess(int taskCount) {
+
+        String line = "\t____________________________________________________________\n";
+
+        System.out.println(line +
+                "\t Got it. I've added this task:\n " +
+                "\t   " + this.toString() + "\n" +
+                "\t Now you have " + taskCount + " tasks in the list.\n" +
+                line);
+    }
 }
