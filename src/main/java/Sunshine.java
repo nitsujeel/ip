@@ -28,6 +28,7 @@ public class Sunshine {
                     break;
                 case ("list"):
                     System.out.print(line);
+                    System.out.println("Here are the tasks in your list:");
                     for (int i = 0; i < taskCount; i++) {
                         System.out.println("\t " + (i + 1) + "." + list[i]);
                     }
