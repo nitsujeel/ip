@@ -18,7 +18,7 @@ public class Sunshine {
         boolean exit = false;
         do {
             String input = scanner.nextLine();
-            String[] parts = input.split("\\s+", 2);
+            String[] parts = input.split("\s", 2);
             String cmd = parts[0];
             String arg = (parts.length == 2) ? parts[1] : "";
             switch (cmd) {
@@ -46,6 +46,16 @@ public class Sunshine {
                     System.out.println(line +
                             "\t OK, I've marked this task as not done yet:\n\t   " +
                             list[indexUnmark-1] + "\n" +
+                            line);
+                    break;
+                case ("todo"):
+                    ToDo todo = new ToDo(arg);
+                    list[taskCount] = todo;
+                    taskCount++;
+                    System.out.println(line +
+                            "\t Got it. I've added this task:\n " +
+                            "\t " + todo + "\n" +
+                            "\t Now you have " + taskCount + " tasks in the list\n" +
                             line);
                     break;
                 default:
