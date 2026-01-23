@@ -3,8 +3,9 @@ import java.util.Scanner;
 public class Sunshine {
     public static void main(String[] args) {
 
-        // Welcome
         String line = "\t____________________________________________________________\n";
+
+        // Welcome
         String welcome = line +
                 "\t Hello! I'm Sunshine\n" +
                 "\t What can I do for you?\n" +
@@ -91,10 +92,10 @@ public class Sunshine {
             }
         } while (!exit);
 
-            // Farewell
-            String farewell = line +
-                    "\t Bye. Hope to see you again soon!\n" +
-                    line;
-            System.out.println(farewell);
+        // Farewell
+        String farewell = line +
+                "\t Bye. Hope to see you again soon!\n" +
+                line;
+        System.out.println(farewell);
     }
 }
