@@ -81,6 +81,10 @@ public class Sunshine {
                     taskCount++;
                     e.addSuccess(taskCount);
                     break;
+                default:
+                    System.out.println(line +
+                            "\t Huh? I don't gets.\n" +
+                            line);
             }
         } while (!exit);
 
