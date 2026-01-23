@@ -7,7 +7,7 @@ public class Sunshine {
 
         // Welcome
         String welcome = line +
-                "\t Hello! I'm Sunshine\n" +
+                "\t Hello! I'm Sunshine :)\n" +
                 "\t What can I do for you?\n" +
                 line;
         System.out.println(welcome);
@@ -39,7 +39,7 @@ public class Sunshine {
                         int indexMark = Integer.parseInt(arg);
                         list[indexMark-1].mark();
                         System.out.println(line +
-                                "\t Nice! I've marked this task as done:\n\t   " +
+                                "\t Good job bubs! I've marked this task as done:\n\t   " +
                                 list[indexMark-1] + "\n" +
                                 line);
                     } catch (NumberFormatException e) {
@@ -48,7 +48,7 @@ public class Sunshine {
                                 line);
                     } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
                         System.out.println(line +
-                                "\t You don't even have that many tasks, don't gaslight me.\n" +
+                                "\t You don't even have that many tasks, stop gaslighting me.\n" +
                                 line);
                     }
                     break;
@@ -57,7 +57,7 @@ public class Sunshine {
                         int indexUnmark = Integer.parseInt(arg);
                         list[indexUnmark-1].unmark();
                         System.out.println(line +
-                                "\t OK, I've marked this task as not done yet:\n\t   " +
+                                "\t So you lied to me la. I've marked this task as not done yet:\n\t   " +
                                 list[indexUnmark-1] + "\n" +
                                 line);
                     } catch (NumberFormatException e) {
@@ -66,7 +66,7 @@ public class Sunshine {
                                 line);
                     } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
                         System.out.println(line +
-                                "\t You don't even have that many tasks, don't gaslight me.\n" +
+                                "\t You don't even have that many tasks, stop gaslighting me.\n" +
                                 line);
                     }
                     break;
@@ -91,7 +91,7 @@ public class Sunshine {
                         dl = new Deadline(dlSplit[0], dlSplit[1]);
                     } catch (ArrayIndexOutOfBoundsException e) {
                         System.out.println(line +
-                                "\t You say deadline then give a description and a /by deadline pls.\n" +
+                                "\t BURUH!! A deadline must have a description and a /by deadline.\n" +
                                 line);
                         break;
                     }
@@ -107,7 +107,7 @@ public class Sunshine {
                         e = new Event(eSplit1[0], eSplit2[0], eSplit2[1]);
                     } catch (ArrayIndexOutOfBoundsException ex) {
                         System.out.println(line +
-                                "\t You say event then give a description, a /from, and a /to pls.\n" +
+                                "\t BURUH!! A event must have a description, a /from, and a /to.\n" +
                                 line);
                         break;
                     }
@@ -124,7 +124,7 @@ public class Sunshine {
 
         // Farewell
         String farewell = line +
-                "\t Bye. Hope to see you again soon!\n" +
+                "\t Goodnight, rest well and sweet dreams. Hope to see you again soon!\n" +
                 line;
         System.out.println(farewell);
     }
