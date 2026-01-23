@@ -35,12 +35,22 @@ public class Sunshine {
                     System.out.println(line);
                     break;
                 case ("mark"):
-                    int indexMark = Integer.parseInt(arg);
-                    list[indexMark-1].mark();
-                    System.out.println(line +
-                            "\t Nice! I've marked this task as done:\n\t   " +
-                            list[indexMark-1] + "\n" +
-                            line);
+                    try {
+                        int indexMark = Integer.parseInt(arg);
+                        list[indexMark-1].mark();
+                        System.out.println(line +
+                                "\t Nice! I've marked this task as done:\n\t   " +
+                                list[indexMark-1] + "\n" +
+                                line);
+                    } catch (NumberFormatException e) {
+                        System.out.println(line +
+                                "\t Which one la?\n" +
+                                line);
+                    } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
+                        System.out.println(line +
+                                "\t You don't even have that many tasks, don't gaslight me.\n" +
+                                line);
+                    }
                     break;
                 case ("unmark"):
                     int indexUnmark = Integer.parseInt(arg);
