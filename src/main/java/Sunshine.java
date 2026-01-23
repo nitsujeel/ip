@@ -94,20 +94,30 @@ public class Sunshine {
                                 "\t " + e.getMessage() + "\n" +
                                 line);
                         break;
+                    } catch (ArrayIndexOutOfBoundsException e) {
+                        System.out.println(line +
+                                "\t You say deadline then give a description and a /by deadline pls.\n" +
+                                line);
+                        break;
                     }
                     list[taskCount] = dl;
                     taskCount++;
                     dl.addSuccess(taskCount);
                     break;
                 case ("event"):
-                    String[] eSplit1 = arg.split(" /from ");
-                    String[] eSplit2 = eSplit1[1].split(" /to ");
                     Event e;
                     try {
+                        String[] eSplit1 = arg.split(" /from ");
+                        String[] eSplit2 = eSplit1[1].split(" /to ");
                         e = new Event(eSplit1[0], eSplit2[0], eSplit2[1]);
                     } catch (EmptyDescriptionException ex) {
                         System.out.println(line +
                                 "\t " + ex.getMessage() + "\n" +
+                                line);
+                        break;
+                    } catch (ArrayIndexOutOfBoundsException ex) {
+                        System.out.println(line +
+                                "\t You say event then give a description, a /from, and a /to pls.\n" +
                                 line);
                         break;
                     }
