@@ -71,13 +71,6 @@ public class Sunshine {
                     taskCount++;
                     e.addSuccess(taskCount);
                     break;
-                default:
-                    String taskName = cmd + " " + arg;
-                    list[taskCount] = new Task(taskName);
-                    taskCount++;
-                    System.out.println(line +
-                            "\t added: " + taskName + "\n" +
-                            line);
             }
         } while (!exit);
 
