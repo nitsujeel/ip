@@ -55,7 +55,7 @@ public class Sunshine {
                     System.out.println(line +
                             "\t Got it. I've added this task:\n " +
                             "\t " + todo + "\n" +
-                            "\t Now you have " + taskCount + " tasks in the list\n" +
+                            "\t Now you have " + taskCount + " tasks in the list.\n" +
                             line);
                     break;
                 default:
