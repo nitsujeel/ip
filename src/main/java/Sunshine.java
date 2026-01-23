@@ -89,11 +89,6 @@ public class Sunshine {
                     Deadline dl;
                     try {
                         dl = new Deadline(dlSplit[0], dlSplit[1]);
-                    } catch (EmptyDescriptionException e) {
-                        System.out.println(line +
-                                "\t " + e.getMessage() + "\n" +
-                                line);
-                        break;
                     } catch (ArrayIndexOutOfBoundsException e) {
                         System.out.println(line +
                                 "\t You say deadline then give a description and a /by deadline pls.\n" +
@@ -110,11 +105,6 @@ public class Sunshine {
                         String[] eSplit1 = arg.split(" /from ");
                         String[] eSplit2 = eSplit1[1].split(" /to ");
                         e = new Event(eSplit1[0], eSplit2[0], eSplit2[1]);
-                    } catch (EmptyDescriptionException ex) {
-                        System.out.println(line +
-                                "\t " + ex.getMessage() + "\n" +
-                                line);
-                        break;
                     } catch (ArrayIndexOutOfBoundsException ex) {
                         System.out.println(line +
                                 "\t You say event then give a description, a /from, and a /to pls.\n" +
