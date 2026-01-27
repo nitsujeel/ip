@@ -1,9 +1,66 @@
+import java.io.File;
+import java.io.FileNotFoundException;
+import java.io.FileWriter;
+import java.io.IOException;
 import java.util.Scanner;
 
 public class Sunshine {
     public static void main(String[] args) {
 
         String line = "\t____________________________________________________________\n";
+
+        Task[] list = new Task[100];
+        int taskCount = 0;
+        String filepath = System.getProperty("user.home") + File.separator + "data" + File.separator + "sunshine.txt";
+        try {
+            File f = new File(filepath);
+            Scanner s = new Scanner(f);
+            while (s.hasNext()) {
+                switch (s.nextLine()) {
+                case "T":
+                    boolean tdDone = s.nextBoolean();
+                    String tdDesc = s.nextLine();
+                    ToDo td = new ToDo(tdDesc);
+                    if (tdDone) {
+                        td.mark();
+                    }
+                    list[taskCount++] = td;
+                    break;
+                case "D":
+                    boolean dlDone = s.nextBoolean();
+                    String dlDesc = s.nextLine();
+                    String dlBy = s.nextLine();
+                    Deadline dl = new Deadline(dlDesc, dlBy);
+                    if (dlDone) {
+                        dl.mark();
+                    }
+                    list[taskCount++] = dl;
+                    break;
+                case "E":
+                    boolean evDone = s.nextBoolean();
+                    String evDesc = s.nextLine();
+                    String evFrom = s.nextLine();
+                    String evTo = s.nextLine();
+                    Event ev = new Event(evDesc, evFrom, evTo);
+                    if (evDone) {
+                        ev.mark();
+                    }
+                    list[taskCount++] = ev;
+                    break;
+                }
+            }
+            System.out.println(line +
+                    "\t Found some saved tasks you've been procrastinating!\n" +
+                    line);
+        } catch (FileNotFoundException e) {
+            System.out.println(line +
+                    "\t Seems like you don't have any saved tasks...\n" +
+                    line);
+        } catch (EmptyDescriptionException e) {
+            System.out.println(line +
+                    "\t There was an issue loading your saved tasks.\n" +
+                    line);
+        }
 
         // Welcome
         String welcome = line +
@@ -14,8 +71,6 @@ public class Sunshine {
 
         // Main loop
         Scanner scanner = new Scanner(System.in);
-        Task[] list = new Task[100];
-        int taskCount = 0;
         boolean exit = false;
         do {
             String input = scanner.nextLine();
