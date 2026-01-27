@@ -23,10 +23,10 @@ public class Sunshine {
             String cmd = parts[0];
             String arg = (parts.length == 2) ? parts[1] : "";
             switch (cmd) {
-            case ("bye"):
+            case "bye":
                 exit = true;
                 break;
-            case ("list"):
+            case "list":
                 System.out.print(line);
                 System.out.println("\t Here are the tasks in your list:");
                 for (int i = 0; i < taskCount; i++) {
@@ -34,7 +34,7 @@ public class Sunshine {
                 }
                 System.out.println(line);
                 break;
-            case ("mark"):
+            case "mark":
                 try {
                     int indexMark = Integer.parseInt(arg);
                     list[indexMark-1].mark();
@@ -52,7 +52,7 @@ public class Sunshine {
                             line);
                 }
                 break;
-            case ("unmark"):
+            case "unmark":
                 try {
                     int indexUnmark = Integer.parseInt(arg);
                     list[indexUnmark-1].unmark();
@@ -70,7 +70,7 @@ public class Sunshine {
                             line);
                 }
                 break;
-            case ("todo"):
+            case "todo":
                 ToDo todo;
                 try {
                     todo = new ToDo(arg);
@@ -84,7 +84,7 @@ public class Sunshine {
                 taskCount++;
                 todo.addSuccess(taskCount);
                 break;
-            case ("deadline"):
+            case "deadline":
                 String[] dlSplit = arg.split(" /by ");
                 Deadline dl;
                 try {
@@ -99,7 +99,7 @@ public class Sunshine {
                 taskCount++;
                 dl.addSuccess(taskCount);
                 break;
-            case ("event"):
+            case "event":
                 Event e;
                 try {
                     String[] eSplit1 = arg.split(" /from ");
@@ -115,7 +115,7 @@ public class Sunshine {
                 taskCount++;
                 e.addSuccess(taskCount);
                 break;
-            case("delete"):
+            case "delete":
                 int indexDelete = Integer.parseInt(arg);
                 Task task = list[indexDelete-1];
                 for (int i = indexDelete; i < taskCount; i++) {
