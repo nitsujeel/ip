@@ -11,38 +11,40 @@ public class Sunshine {
 
         Task[] list = new Task[100];
         int taskCount = 0;
-        String filepath = System.getProperty("user.home") + File.separator + "data" + File.separator + "sunshine.txt";
+        String filePath = "data" + File.separator + "sunshine.txt";
+        System.out.println(filePath);
         try {
-            File f = new File(filepath);
+            File f = new File(filePath);
             Scanner s = new Scanner(f);
             while (s.hasNext()) {
                 switch (s.nextLine()) {
                 case "T":
-                    boolean tdDone = s.nextBoolean();
+                    String tdDone = s.nextLine();
                     String tdDesc = s.nextLine();
+                    System.out.println(tdDone + tdDesc);
                     ToDo td = new ToDo(tdDesc);
-                    if (tdDone) {
+                    if (tdDone.equals("1")) {
                         td.mark();
                     }
                     list[taskCount++] = td;
                     break;
                 case "D":
-                    boolean dlDone = s.nextBoolean();
+                    String dlDone = s.nextLine();
                     String dlDesc = s.nextLine();
                     String dlBy = s.nextLine();
                     Deadline dl = new Deadline(dlDesc, dlBy);
-                    if (dlDone) {
+                    if (dlDone.equals("1")) {
                         dl.mark();
                     }
                     list[taskCount++] = dl;
                     break;
                 case "E":
-                    boolean evDone = s.nextBoolean();
+                    String evDone = s.nextLine();
                     String evDesc = s.nextLine();
                     String evFrom = s.nextLine();
                     String evTo = s.nextLine();
                     Event ev = new Event(evDesc, evFrom, evTo);
-                    if (evDone) {
+                    if (evDone.equals("1")) {
                         ev.mark();
                     }
                     list[taskCount++] = ev;
@@ -55,7 +57,15 @@ public class Sunshine {
         } catch (FileNotFoundException e) {
             System.out.println(line +
                     "\t Seems like you don't have any saved tasks...\n" +
-                    line);
+                    "\t Creating a local list now...");
+            File f = new File(filePath);
+            try {
+                f.createNewFile();
+                System.out.println("\t Success!");
+            } catch (IOException ex) {
+                System.out.println("\t Something went wrong: " + e.getMessage());
+            }
+            System.out.println(line);
         } catch (EmptyDescriptionException e) {
             System.out.println(line +
                     "\t There was an issue loading your saved tasks.\n" +
@@ -129,9 +139,18 @@ public class Sunshine {
                 ToDo todo;
                 try {
                     todo = new ToDo(arg);
+                    FileWriter fw = new FileWriter(filePath, true);
+                    fw.write("T" + System.lineSeparator() + "0" + System.lineSeparator() + arg +
+                            System.lineSeparator());
+                    fw.close();
                 } catch (EmptyDescriptionException e) {
                     System.out.println(line +
                             "\t " + e.getMessage() + "\n" +
+                            line);
+                    break;
+                } catch (IOException e) {
+                    System.out.println(line +
+                            "\t BURUH!! Had some trouble saving this task.\n" +
                             line);
                     break;
                 }
@@ -144,9 +163,18 @@ public class Sunshine {
                 Deadline dl;
                 try {
                     dl = new Deadline(dlSplit[0], dlSplit[1]);
+                    FileWriter fw = new FileWriter(filePath, true);
+                    fw.write("D" + System.lineSeparator() + "0" + System.lineSeparator() + dlSplit[0] +
+                            System.lineSeparator() + dlSplit[1] + System.lineSeparator());
+                    fw.close();
                 } catch (ArrayIndexOutOfBoundsException e) {
                     System.out.println(line +
                             "\t BURUH!! A deadline must have a description and a /by deadline.\n" +
+                            line);
+                    break;
+                } catch (IOException e) {
+                    System.out.println(line +
+                            "\t BURUH!! Had some trouble saving this task.\n" +
                             line);
                     break;
                 }
@@ -160,9 +188,19 @@ public class Sunshine {
                     String[] eSplit1 = arg.split(" /from ");
                     String[] eSplit2 = eSplit1[1].split(" /to ");
                     e = new Event(eSplit1[0], eSplit2[0], eSplit2[1]);
+                    FileWriter fw = new FileWriter(filePath, true);
+                    fw.write("E" + System.lineSeparator() + "0" + System.lineSeparator() + eSplit1[0] +
+                            System.lineSeparator() + eSplit2[0] + System.lineSeparator() + eSplit2[1] +
+                            System.lineSeparator());
+                    fw.close();
                 } catch (ArrayIndexOutOfBoundsException ex) {
                     System.out.println(line +
                             "\t BURUH!! A event must have a description, a /from, and a /to.\n" +
+                            line);
+                    break;
+                } catch (IOException ex) {
+                    System.out.println(line +
+                            "\t BURUH!! Had some trouble saving this task.\n" +
                             line);
                     break;
                 }
