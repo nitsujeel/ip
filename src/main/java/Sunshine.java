@@ -68,7 +68,7 @@ public class Sunshine {
             System.out.println(line);
         } catch (EmptyDescriptionException e) {
             System.out.println(line +
-                    "\t There was an issue loading your saved tasks.\n" +
+                    "\t There was an issue loading your saved tasks: " + e.getMessage() +
                     line);
         }
 
@@ -107,6 +107,7 @@ public class Sunshine {
                             "\t Good job bubs! I've marked this task as done:\n\t   " +
                             list[indexMark-1] + "\n" +
                             line);
+                    // TODO: mark in txt
                 } catch (NumberFormatException e) {
                     System.out.println(line +
                             "\t Which one la?\n" +
@@ -125,6 +126,7 @@ public class Sunshine {
                             "\t So you lied to me la. I've marked this task as not done yet:\n\t   " +
                             list[indexUnmark-1] + "\n" +
                             line);
+                    // TODO: unmark in txt
                 } catch (NumberFormatException e) {
                     System.out.println(line +
                             "\t Which one la?\n" +
@@ -210,6 +212,7 @@ public class Sunshine {
                 break;
             case "delete":
                 int indexDelete = Integer.parseInt(arg);
+                // todo: delete from txt
                 Task task = list[indexDelete-1];
                 for (int i = indexDelete; i < taskCount; i++) {
                     list[i-1] = list[i];
