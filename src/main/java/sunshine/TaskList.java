@@ -78,6 +78,12 @@ public class TaskList {
         return result.trim();
     }
 
+    /**
+     * Searches list for Tasks containing keyword.
+     *
+     * @param keyword Keyword to search for.
+     * @return A TaskList of tasks that contain the keyword in their descriptions.
+     */
     public TaskList findTasks(String keyword) {
         TaskList result = new TaskList();
         for (int i = 0; i < this.taskCount; i++) {

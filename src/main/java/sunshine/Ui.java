@@ -144,6 +144,11 @@ public class Ui {
                 "Now you have " + taskCount + " task(s) in the list.");
     }
 
+    /**
+     * Prints the results of the find feature.
+     *
+     * @param taskList List of Tasks found from the search.
+     */
     public void showResults(TaskList taskList) {
         this.print("Here's what I found, bubs:",
                 taskList.toString());
