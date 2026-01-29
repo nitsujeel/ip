@@ -9,6 +9,8 @@ public class Sunshine {
 
         String line = "\t____________________________________________________________\n";
 
+        Ui ui = new Ui();
+
         Task[] list = new Task[100];
         int taskCount = 0;
         String filePath = "data" + File.separator + "sunshine.txt";
@@ -79,11 +81,7 @@ public class Sunshine {
         }
 
         // Welcome
-        String welcome = line +
-                "\t Hello! I'm Sunshine :)\n" +
-                "\t What can I do for you?\n" +
-                line;
-        System.out.println(welcome);
+        ui.showWelcome();
 
         // Main loop
         Scanner scanner = new Scanner(System.in);
@@ -167,11 +165,9 @@ public class Sunshine {
                     deleteScanner.close();
                     tempFile.renameTo(inputFile);
 
-                    list[indexMark-1].mark();
-                    System.out.println(line +
-                            "\t Good job bubs! I've marked this task as done:\n\t   " +
-                            list[indexMark-1] + "\n" +
-                            line);
+                    Task task = list[indexMark-1];
+                    task.mark();
+                    ui.showMarkSuccess(task);
                 } catch (NumberFormatException e) {
                     System.out.println(line +
                             "\t Which one la?\n" +
@@ -252,11 +248,9 @@ public class Sunshine {
                     deleteScanner.close();
                     tempFile.renameTo(inputFile);
 
-                    list[indexUnmark-1].unmark();
-                    System.out.println(line +
-                            "\t So you lied to me la. I've marked this task as not done yet:\n\t   " +
-                            list[indexUnmark-1] + "\n" +
-                            line);
+                    Task task = list[indexUnmark-1];
+                    task.unmark();
+                    ui.showUnmarkSuccess(task);
                 } catch (NumberFormatException e) {
                     System.out.println(line +
                             "\t Which one la?\n" +
@@ -296,7 +290,7 @@ public class Sunshine {
                 }
                 list[taskCount] = todo;
                 taskCount++;
-                todo.addSuccess(taskCount);
+                ui.showAddTaskSuccess(todo, taskCount);
                 break;
             case "deadline":
                 String[] dlSplit = arg.split(" /by ");
@@ -320,7 +314,7 @@ public class Sunshine {
                 }
                 list[taskCount] = dl;
                 taskCount++;
-                dl.addSuccess(taskCount);
+                ui.showAddTaskSuccess(dl, taskCount);
                 break;
             case "event":
                 Event e;
@@ -346,7 +340,7 @@ public class Sunshine {
                 }
                 list[taskCount] = e;
                 taskCount++;
-                e.addSuccess(taskCount);
+                ui.showAddTaskSuccess(e, taskCount);
                 break;
             case "delete":
                 int indexDelete = Integer.parseInt(arg);
@@ -420,11 +414,7 @@ public class Sunshine {
                 }
                 list[taskCount-1] = null;
                 taskCount--;
-                System.out.println(line +
-                        "\t You bum. I've removed this task:\n" +
-                        "\t   " + task + "\n" +
-                        "\t Now you have " + taskCount + " tasks in the list.\n" +
-                        line);
+                ui.showDeleteSuccess(task, taskCount);
                 break;
             default:
                 System.out.println(line +
@@ -434,9 +424,6 @@ public class Sunshine {
         } while (!exit);
 
         // Farewell
-        String farewell = line +
-                "\t Goodnight, rest well and sweet dreams. Hope to see you again soon!\n" +
-                line;
-        System.out.println(farewell);
+        ui.showFarewell();
     }
 }
