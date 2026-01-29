@@ -51,9 +51,15 @@ public class Sunshine {
                     break;
                 }
             }
-            System.out.println(line +
-                    "\t Found some saved tasks you've been procrastinating!\n" +
-                    line);
+            if (taskCount > 0) {
+                System.out.println(line +
+                        "\t Found some saved tasks you've been procrastinating!\n" +
+                        line);
+            } else {
+                System.out.println(line +
+                        "\t Your local save file loaded but has no tasks!\n" +
+                        line);
+            }
         } catch (FileNotFoundException e) {
             System.out.println(line +
                     "\t Seems like you don't have any saved tasks...\n" +
