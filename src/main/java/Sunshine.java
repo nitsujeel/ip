@@ -221,50 +221,26 @@ public class Sunshine {
                     Scanner deleteScanner = new Scanner(inputFile);
                     FileWriter deleteWriter = new FileWriter(tempFile);
 
-                    // copy all before indexDelete
-                    for (int i = 1; i < indexDelete; i++) {
-                        switch (deleteScanner.nextLine()) {
-                        case "T":
-                            deleteWriter.write("T\n");
-                            for (int j = 0; j < 2; j++) {
-                                deleteWriter.write(deleteScanner.nextLine() + "\n");
+                    for (int i = 1; i <= taskCount; i++) {
+                        if (i == indexDelete) {
+                            switch (deleteScanner.nextLine()) {
+                            case "T":
+                                for (int j = 0; j < 2; j++) {
+                                    deleteScanner.nextLine();
+                                }
+                                break;
+                            case "D":
+                                for (int j = 0; j < 3; j++) {
+                                    deleteScanner.nextLine();
+                                }
+                                break;
+                            case "E":
+                                for (int j = 0; j < 4; j++) {
+                                    deleteScanner.nextLine();
+                                }
+                                break;
                             }
-                            break;
-                        case "D":
-                            deleteWriter.write("D\n");
-                            for (int j = 0; j < 3; j++) {
-                                deleteWriter.write(deleteScanner.nextLine() + "\n");
-                            }
-                            break;
-                        case "E":
-                            deleteWriter.write("E\n");
-                            for (int j = 0; j < 4; j++) {
-                                deleteWriter.write(deleteScanner.nextLine() + "\n");
-                            }
-                            break;
-                        }
-                    }
-
-                    // do not copy indexDelete
-                    switch (deleteScanner.nextLine()) {
-                    case "T":
-                        deleteScanner.nextLine();
-                        break;
-                    case "D":
-                        for (int j = 0; j < 2; j++) {
-                            deleteScanner.nextLine();
-                        }
-                        break;
-                    case "E":
-                        for (int j = 0; j < 3; j++) {
-                            deleteScanner.nextLine();
-                        }
-                        break;
-                    }
-
-                    // copy everything after indexDelete
-                    for (int i = indexDelete + 1; i <= taskCount; i++) {
-                        while (deleteScanner.hasNext()) {
+                        } else {
                             switch (deleteScanner.nextLine()) {
                             case "T":
                                 deleteWriter.write("T\n");
