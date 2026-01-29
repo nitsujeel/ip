@@ -213,6 +213,94 @@ public class Sunshine {
             case "delete":
                 int indexDelete = Integer.parseInt(arg);
                 // todo: delete from txt
+                try {
+                    File inputFile = new File(filePath);
+                    File tempFile = new File("data" + File.separator + "temp.txt");
+                    tempFile.createNewFile();
+
+                    Scanner deleteScanner = new Scanner(inputFile);
+                    FileWriter deleteWriter = new FileWriter(tempFile);
+
+                    // copy all before indexDelete
+                    for (int i = 1; i < indexDelete; i++) {
+                        switch (deleteScanner.nextLine()) {
+                        case "T":
+                            deleteWriter.write("T\n");
+                            for (int j = 0; j < 2; j++) {
+                                deleteWriter.write(deleteScanner.nextLine() + "\n");
+                            }
+                            break;
+                        case "D":
+                            deleteWriter.write("D\n");
+                            for (int j = 0; j < 3; j++) {
+                                deleteWriter.write(deleteScanner.nextLine() + "\n");
+                            }
+                            break;
+                        case "E":
+                            deleteWriter.write("E\n");
+                            for (int j = 0; j < 4; j++) {
+                                deleteWriter.write(deleteScanner.nextLine() + "\n");
+                            }
+                            break;
+                        }
+                    }
+
+                    // do not copy indexDelete
+                    switch (deleteScanner.nextLine()) {
+                    case "T":
+                        deleteScanner.nextLine();
+                        break;
+                    case "D":
+                        for (int j = 0; j < 2; j++) {
+                            deleteScanner.nextLine();
+                        }
+                        break;
+                    case "E":
+                        for (int j = 0; j < 3; j++) {
+                            deleteScanner.nextLine();
+                        }
+                        break;
+                    }
+
+                    // copy everything after indexDelete
+                    for (int i = indexDelete + 1; i <= taskCount; i++) {
+                        while (deleteScanner.hasNext()) {
+                            switch (deleteScanner.nextLine()) {
+                            case "T":
+                                deleteWriter.write("T\n");
+                                for (int j = 0; j < 2; j++) {
+                                    deleteWriter.write(deleteScanner.nextLine() + "\n");
+                                }
+                                break;
+                            case "D":
+                                deleteWriter.write("D\n");
+                                for (int j = 0; j < 3; j++) {
+                                    deleteWriter.write(deleteScanner.nextLine() + "\n");
+                                }
+                                break;
+                            case "E":
+                                deleteWriter.write("E\n");
+                                for (int j = 0; j < 4; j++) {
+                                    deleteWriter.write(deleteScanner.nextLine() + "\n");
+                                }
+                                break;
+                            }
+                        }
+                    }
+
+                    deleteWriter.close();
+                    deleteScanner.close();
+                    tempFile.renameTo(inputFile);
+
+                } catch (FileNotFoundException ex) {
+                    System.out.println(line +
+                            "\t BURUH!! Save file missing!\n" +
+                            line);
+                } catch (IOException ex) {
+                    System.out.println(line +
+                            "\t BURUH!! Had some trouble deleting this task.\n" +
+                            line);
+                }
                 Task task = list[indexDelete-1];
                 for (int i = indexDelete; i < taskCount; i++) {
                     list[i-1] = list[i];
