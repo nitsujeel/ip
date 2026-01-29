@@ -144,6 +144,11 @@ public class Ui {
                 "Now you have " + taskCount + " task(s) in the list.");
     }
 
+    public void showResults(TaskList taskList) {
+        this.print("Here's what I found, bubs:",
+                taskList.toString());
+    }
+
     /**
      * Prints the default message when the command is not recognised.
      */
