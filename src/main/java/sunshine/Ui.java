@@ -1,3 +1,5 @@
+package sunshine;
+
 public class Ui {
     private static final String LINE = "\t____________________________________________________________\n";
     private static final String ERROR_PREFIX = "BURUH!! ";

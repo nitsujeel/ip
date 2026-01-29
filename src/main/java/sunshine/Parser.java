@@ -1,3 +1,5 @@
+package sunshine;
+
 public class Parser {
 
     public static String[] parseInput(String input) {

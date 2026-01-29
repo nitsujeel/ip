@@ -1,3 +1,5 @@
+package sunshine;
+
 public class ToDo extends Task {
     public ToDo(String description) throws EmptyDescriptionException {
         super(description);

@@ -1,3 +1,5 @@
+package sunshine;
+
 public class TaskList {
 
     private Task[] list;
