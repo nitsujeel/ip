@@ -53,31 +53,17 @@ public class Sunshine {
                     break;
                 }
             }
-            if (taskCount > 0) {
-                System.out.println(line +
-                        "\t Found some saved tasks you've been procrastinating!\n" +
-                        line);
-            } else {
-                System.out.println(line +
-                        "\t Your local save file loaded but has no tasks!\n" +
-                        line);
-            }
+            ui.showLoadSuccess(taskCount);
         } catch (FileNotFoundException e) {
-            System.out.println(line +
-                    "\t Seems like you don't have any saved tasks...\n" +
-                    "\t Creating a local list now...");
+            ui.showLoadFail();
             File f = new File(filePath);
             try {
                 f.createNewFile();
-                System.out.println("\t Success!");
             } catch (IOException ex) {
-                System.out.println("\t Something went wrong: " + e.getMessage());
+                ui.showException("creating a new save file", ex);
             }
-            System.out.println(line);
         } catch (EmptyDescriptionException e) {
-            System.out.println(line +
-                    "\t There was an issue loading your saved tasks: " + e.getMessage() +
-                    line);
+            ui.showException("loading your saved tasks", e);
         }
 
         // Welcome
@@ -169,21 +155,13 @@ public class Sunshine {
                     task.mark();
                     ui.showMarkSuccess(task);
                 } catch (NumberFormatException e) {
-                    System.out.println(line +
-                            "\t Which one la?\n" +
-                            line);
+                    ui.showMissingIndex();
                 } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
-                    System.out.println(line +
-                            "\t You don't even have that many tasks, stop gaslighting me.\n" +
-                            line);
-                } catch (FileNotFoundException ex) {
-                    System.out.println(line +
-                            "\t BURUH!! Save file missing!\n" +
-                            line);
-                } catch (IOException ex) {
-                    System.out.println(line +
-                            "\t BURUH!! Had some trouble marking this task.\n" +
-                            line);
+                    ui.showIndexOutofBounds();
+                } catch (FileNotFoundException e) {
+                    ui.showFileNotFound();
+                } catch (IOException e) {
+                    ui.showException("marking this task", e);
                 }
                 break;
             case "unmark":
@@ -252,21 +230,13 @@ public class Sunshine {
                     task.unmark();
                     ui.showUnmarkSuccess(task);
                 } catch (NumberFormatException e) {
-                    System.out.println(line +
-                            "\t Which one la?\n" +
-                            line);
+                    ui.showMissingIndex();
                 } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
-                    System.out.println(line +
-                            "\t You don't even have that many tasks, stop gaslighting me.\n" +
-                            line);
-                } catch (FileNotFoundException ex) {
-                    System.out.println(line +
-                            "\t BURUH!! Save file missing!\n" +
-                            line);
-                } catch (IOException ex) {
-                    System.out.println(line +
-                            "\t BURUH!! Had some trouble unmarking this task.\n" +
-                            line);
+                    ui.showIndexOutofBounds();
+                } catch (FileNotFoundException e) {
+                    ui.showFileNotFound();
+                } catch (IOException e) {
+                    ui.showException("unmarking this task", e);
                 }
                 break;
             case "todo":
@@ -278,14 +248,10 @@ public class Sunshine {
                             System.lineSeparator());
                     fw.close();
                 } catch (EmptyDescriptionException e) {
-                    System.out.println(line +
-                            "\t " + e.getMessage() + "\n" +
-                            line);
+                    ui.showToDoFormat();
                     break;
                 } catch (IOException e) {
-                    System.out.println(line +
-                            "\t BURUH!! Had some trouble saving this task.\n" +
-                            line);
+                    ui.showException("saving this task", e);
                     break;
                 }
                 list[taskCount] = todo;
@@ -302,14 +268,10 @@ public class Sunshine {
                             System.lineSeparator() + dlSplit[1] + System.lineSeparator());
                     fw.close();
                 } catch (ArrayIndexOutOfBoundsException e) {
-                    System.out.println(line +
-                            "\t BURUH!! A deadline must have a description and a /by deadline.\n" +
-                            line);
+                    ui.showDeadlineFormat();
                     break;
                 } catch (IOException e) {
-                    System.out.println(line +
-                            "\t BURUH!! Had some trouble saving this task.\n" +
-                            line);
+                    ui.showException("saving this task", e);
                     break;
                 }
                 list[taskCount] = dl;
@@ -317,30 +279,26 @@ public class Sunshine {
                 ui.showAddTaskSuccess(dl, taskCount);
                 break;
             case "event":
-                Event e;
+                Event ev;
                 try {
                     String[] eSplit1 = arg.split(" /from ");
                     String[] eSplit2 = eSplit1[1].split(" /to ");
-                    e = new Event(eSplit1[0], eSplit2[0], eSplit2[1]);
+                    ev = new Event(eSplit1[0], eSplit2[0], eSplit2[1]);
                     FileWriter fw = new FileWriter(filePath, true);
                     fw.write("E" + System.lineSeparator() + "0" + System.lineSeparator() + eSplit1[0] +
                             System.lineSeparator() + eSplit2[0] + System.lineSeparator() + eSplit2[1] +
                             System.lineSeparator());
                     fw.close();
-                } catch (ArrayIndexOutOfBoundsException ex) {
-                    System.out.println(line +
-                            "\t BURUH!! A event must have a description, a /from, and a /to.\n" +
-                            line);
+                } catch (ArrayIndexOutOfBoundsException e) {
+                    ui.showEventFormat();
                     break;
-                } catch (IOException ex) {
-                    System.out.println(line +
-                            "\t BURUH!! Had some trouble saving this task.\n" +
-                            line);
+                } catch (IOException e) {
+                    ui.showException("saving this task", e);
                     break;
                 }
-                list[taskCount] = e;
+                list[taskCount] = ev;
                 taskCount++;
-                ui.showAddTaskSuccess(e, taskCount);
+                ui.showAddTaskSuccess(ev, taskCount);
                 break;
             case "delete":
                 int indexDelete = Integer.parseInt(arg);
@@ -399,14 +357,10 @@ public class Sunshine {
                     deleteScanner.close();
                     tempFile.renameTo(inputFile);
 
-                } catch (FileNotFoundException ex) {
-                    System.out.println(line +
-                            "\t BURUH!! Save file missing!\n" +
-                            line);
-                } catch (IOException ex) {
-                    System.out.println(line +
-                            "\t BURUH!! Had some trouble deleting this task.\n" +
-                            line);
+                } catch (FileNotFoundException e) {
+                    ui.showFileNotFound();
+                } catch (IOException e) {
+                    ui.showException("deleting this task", e);
                 }
                 Task task = list[indexDelete-1];
                 for (int i = indexDelete; i < taskCount; i++) {
@@ -417,9 +371,7 @@ public class Sunshine {
                 ui.showDeleteSuccess(task, taskCount);
                 break;
             default:
-                System.out.println(line +
-                        "\t Huh? I don't gets.\n" +
-                        line);
+                ui.showDefault();
             }
         } while (!exit);
 
