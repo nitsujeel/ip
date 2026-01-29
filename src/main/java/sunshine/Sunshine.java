@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.Scanner;
 
 public class Sunshine {
+
     public static void main(String[] args) {
 
         Ui ui = new Ui();

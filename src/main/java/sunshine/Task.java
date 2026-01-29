@@ -14,8 +14,9 @@ public abstract class Task {
         this.isDone = false;
     }
 
-    private String getStatusIcon() {
-        return (this.isDone ? "X" : " "); // mark done task with X
+
+    public String getStatusIcon() {
+        return (this.isDone ? "X" : " ");
     }
 
     @Override
