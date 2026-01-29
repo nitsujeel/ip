@@ -180,7 +180,7 @@ public class Sunshine {
                             line);
                 } catch (IOException ex) {
                     System.out.println(line +
-                            "\t BURUH!! Had some trouble deleting this task.\n" +
+                            "\t BURUH!! Had some trouble marking this task.\n" +
                             line);
                 }
                 break;
