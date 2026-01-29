@@ -136,6 +136,10 @@ public class Sunshine {
                 Task task = taskList.deleteTask(indexDelete);
                 ui.showDeleteSuccess(task, taskList.getTaskCount());
                 break;
+            case "find":
+                TaskList results = taskList.findTasks(arg);
+                ui.showResults(results);
+                break;
             default:
                 ui.showDefault();
             }

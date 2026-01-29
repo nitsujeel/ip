@@ -82,6 +82,11 @@ public class Ui {
                 "Now you have " + taskCount + " task(s) in the list.");
     }
 
+    public void showResults(TaskList taskList) {
+        this.print("Here's what I found, bubs:",
+                taskList.toString());
+    }
+
     public void showDefault() {
         this.print("Huh? I don't gets.");
     }
