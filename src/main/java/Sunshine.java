@@ -103,11 +103,11 @@ public class Sunshine {
                 try {
                     int indexMark = Integer.parseInt(arg);
                     list[indexMark-1].mark();
+                    // TODO: mark in txt
                     System.out.println(line +
                             "\t Good job bubs! I've marked this task as done:\n\t   " +
                             list[indexMark-1] + "\n" +
                             line);
-                    // TODO: mark in txt
                 } catch (NumberFormatException e) {
                     System.out.println(line +
                             "\t Which one la?\n" +
@@ -122,11 +122,12 @@ public class Sunshine {
                 try {
                     int indexUnmark = Integer.parseInt(arg);
                     list[indexUnmark-1].unmark();
+                    // TODO: unmark in txt
+
                     System.out.println(line +
                             "\t So you lied to me la. I've marked this task as not done yet:\n\t   " +
                             list[indexUnmark-1] + "\n" +
                             line);
-                    // TODO: unmark in txt
                 } catch (NumberFormatException e) {
                     System.out.println(line +
                             "\t Which one la?\n" +
@@ -212,7 +213,6 @@ public class Sunshine {
                 break;
             case "delete":
                 int indexDelete = Integer.parseInt(arg);
-                // todo: delete from txt
                 try {
                     File inputFile = new File(filePath);
                     File tempFile = new File("data" + File.separator + "temp.txt");
