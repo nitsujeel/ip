@@ -187,9 +187,66 @@ public class Sunshine {
             case "unmark":
                 try {
                     int indexUnmark = Integer.parseInt(arg);
-                    list[indexUnmark-1].unmark();
-                    // TODO: unmark in txt
 
+                    File inputFile = new File(filePath);
+                    File tempFile = new File("data" + File.separator + "temp.txt");
+                    tempFile.createNewFile();
+
+                    Scanner deleteScanner = new Scanner(inputFile);
+                    FileWriter deleteWriter = new FileWriter(tempFile);
+
+                    for (int i = 1; i <= taskCount; i++) {
+                        if (i == indexUnmark) {
+                            switch (deleteScanner.nextLine()) {
+                            case "T":
+                                deleteWriter.write("T\n0\n");
+                                deleteScanner.nextLine();
+                                deleteWriter.write(deleteScanner.nextLine() + "\n");
+                                break;
+                            case "D":
+                                deleteWriter.write("D\n0\n");
+                                deleteScanner.nextLine();
+                                for (int j = 0; j < 2; j++) {
+                                    deleteWriter.write(deleteScanner.nextLine() + "\n");
+                                }
+                                break;
+                            case "E":
+                                deleteWriter.write("E\n0\n");
+                                deleteScanner.nextLine();
+                                for (int j = 0; j < 3; j++) {
+                                    deleteWriter.write(deleteScanner.nextLine() + "\n");
+                                }
+                                break;
+                            }
+                        } else {
+                            switch (deleteScanner.nextLine()) {
+                            case "T":
+                                deleteWriter.write("T\n");
+                                for (int j = 0; j < 2; j++) {
+                                    deleteWriter.write(deleteScanner.nextLine() + "\n");
+                                }
+                                break;
+                            case "D":
+                                deleteWriter.write("D\n");
+                                for (int j = 0; j < 3; j++) {
+                                    deleteWriter.write(deleteScanner.nextLine() + "\n");
+                                }
+                                break;
+                            case "E":
+                                deleteWriter.write("E\n");
+                                for (int j = 0; j < 4; j++) {
+                                    deleteWriter.write(deleteScanner.nextLine() + "\n");
+                                }
+                                break;
+                            }
+                        }
+                    }
+
+                    deleteWriter.close();
+                    deleteScanner.close();
+                    tempFile.renameTo(inputFile);
+
+                    list[indexUnmark-1].unmark();
                     System.out.println(line +
                             "\t So you lied to me la. I've marked this task as not done yet:\n\t   " +
                             list[indexUnmark-1] + "\n" +
@@ -201,6 +258,14 @@ public class Sunshine {
                 } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
                     System.out.println(line +
                             "\t You don't even have that many tasks, stop gaslighting me.\n" +
+                            line);
+                } catch (FileNotFoundException ex) {
+                    System.out.println(line +
+                            "\t BURUH!! Save file missing!\n" +
+                            line);
+                } catch (IOException ex) {
+                    System.out.println(line +
+                            "\t BURUH!! Had some trouble unmarking this task.\n" +
                             line);
                 }
                 break;
