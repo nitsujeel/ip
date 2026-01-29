@@ -4,12 +4,17 @@ public abstract class Task {
     protected String description;
     protected boolean isDone;
 
+    /**
+     * Intitialises a Task object.
+     *
+     * @param description Description of the task.
+     */
     public Task(String description) {
         this.description = description;
         this.isDone = false;
     }
 
-    public String getStatusIcon() {
+    private String getStatusIcon() {
         return (this.isDone ? "X" : " "); // mark done task with X
     }
 
@@ -18,22 +23,17 @@ public abstract class Task {
         return "[" + this.getStatusIcon() + "] " + this.description;
     }
 
+    /**
+     * Marks the Task as completed.
+     */
     public void mark() {
         this.isDone = true;
     }
 
+    /**
+     * Unmarks the Task, resetting it to uncompleted.
+     */
     public void unmark() {
         this.isDone = false;
-    }
-
-    public void addSuccess(int taskCount) {
-
-        String line = "\t____________________________________________________________\n";
-
-        System.out.println(line +
-                "\t Got it. I've added this task:\n " +
-                "\t   " + this.toString() + "\n" +
-                "\t Now you have " + taskCount + " tasks in the list.\n" +
-                line);
     }
 }
