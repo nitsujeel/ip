@@ -1,14 +1,29 @@
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
+import java.time.format.DateTimeParseException;
+
 public class Deadline extends Task {
 
-    protected String by;
+    protected String byString;
+    protected LocalDate byDate;
 
     public Deadline(String description, String by) {
         super(description);
-        this.by = by;
+        this.byString = by;
+        try {
+            String[] dates = by.split("/");
+            this.byDate = LocalDate.parse(dates[2] + "-" + dates[1] + "-" + dates[0]);
+        } catch (ArrayIndexOutOfBoundsException | DateTimeParseException e) {
+            this.byDate = null;
+        }
     }
 
     @Override
     public String toString() {
-        return "[D]" + super.toString() + " (by: " + by + ")";
+        if (this.byDate == null) {
+            return "[D]" + super.toString() + " (by: " + byString + ")";
+        } else {
+            return "[D]" + super.toString() + " (by: " + this.byDate.format(DateTimeFormatter.ofPattern("d MMM yyyy")) + ")";
+        }
     }
 }
