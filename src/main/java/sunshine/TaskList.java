@@ -31,6 +31,9 @@ public class TaskList {
     }
 
     public Task deleteTask(int index) {
+        if (index > taskCount) {
+            throw new IndexOutOfBoundsException("Index is out of bounds");
+        }
         Task task = this.list[index - 1];
         for (int i = index; i < this.taskCount; i++) {
             this.list[i - 1] = this.list[i];

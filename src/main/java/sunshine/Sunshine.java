@@ -130,6 +130,8 @@ public class Sunshine {
                     ui.showFileNotFound();
                 } catch (IOException e) {
                     ui.showException("deleting this task", e);
+                } catch (IndexOutOfBoundsException e) {
+                    ui.showIndexOutofBounds();
                 }
                 Task task = taskList.deleteTask(indexDelete);
                 ui.showDeleteSuccess(task, taskList.getTaskCount());

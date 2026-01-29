@@ -5,9 +5,6 @@ from
 to
 T
 0
-hello
-T
-0
 todo_name
 T
 0
