@@ -29,9 +29,10 @@ public class Ui {
                 "What can I do for you?");
     }
 
-//    public void showList(TaskList tasklist) {
-//
-//    }
+    public void showList(TaskList tasklist) {
+        this.print("Here are the tasks in your list:",
+                tasklist.toString());
+    }
 
     public void showMarkSuccess(Task task) {
         this.print("Good job bubs! I've marked this task as done:",

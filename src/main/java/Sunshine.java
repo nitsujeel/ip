@@ -10,9 +10,8 @@ public class Sunshine {
         String line = "\t____________________________________________________________\n";
 
         Ui ui = new Ui();
+        TaskList taskList = new TaskList();
 
-        Task[] list = new Task[100];
-        int taskCount = 0;
         String filePath = "data" + File.separator + "sunshine.txt";
         System.out.println(filePath);
         try {
@@ -28,7 +27,7 @@ public class Sunshine {
                     if (tdDone.equals("1")) {
                         td.mark();
                     }
-                    list[taskCount++] = td;
+                    taskList.addTask(td);
                     break;
                 case "D":
                     String dlDone = s.nextLine();
@@ -38,7 +37,7 @@ public class Sunshine {
                     if (dlDone.equals("1")) {
                         dl.mark();
                     }
-                    list[taskCount++] = dl;
+                    taskList.addTask(dl);
                     break;
                 case "E":
                     String evDone = s.nextLine();
@@ -49,11 +48,11 @@ public class Sunshine {
                     if (evDone.equals("1")) {
                         ev.mark();
                     }
-                    list[taskCount++] = ev;
+                    taskList.addTask(ev);
                     break;
                 }
             }
-            ui.showLoadSuccess(taskCount);
+            ui.showLoadSuccess(taskList.getTaskCount());
         } catch (FileNotFoundException e) {
             ui.showLoadFail();
             File f = new File(filePath);
@@ -82,12 +81,7 @@ public class Sunshine {
                 exit = true;
                 break;
             case "list":
-                System.out.print(line);
-                System.out.println("\t Here are the tasks in your list:");
-                for (int i = 0; i < taskCount; i++) {
-                    System.out.println("\t " + (i + 1) + "." + list[i]);
-                }
-                System.out.println(line);
+                ui.showList(taskList);
                 break;
             case "mark":
                 try {
@@ -100,7 +94,7 @@ public class Sunshine {
                     Scanner deleteScanner = new Scanner(inputFile);
                     FileWriter deleteWriter = new FileWriter(tempFile);
 
-                    for (int i = 1; i <= taskCount; i++) {
+                    for (int i = 1; i <= taskList.getTaskCount(); i++) {
                         if (i == indexMark) {
                             switch (deleteScanner.nextLine()) {
                             case "T":
@@ -151,9 +145,8 @@ public class Sunshine {
                     deleteScanner.close();
                     tempFile.renameTo(inputFile);
 
-                    Task task = list[indexMark-1];
-                    task.mark();
-                    ui.showMarkSuccess(task);
+                    Task markedTask = taskList.markTask(indexMark);
+                    ui.showMarkSuccess(markedTask);
                 } catch (NumberFormatException e) {
                     ui.showMissingIndex();
                 } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
@@ -175,7 +168,7 @@ public class Sunshine {
                     Scanner deleteScanner = new Scanner(inputFile);
                     FileWriter deleteWriter = new FileWriter(tempFile);
 
-                    for (int i = 1; i <= taskCount; i++) {
+                    for (int i = 1; i <= taskList.getTaskCount(); i++) {
                         if (i == indexUnmark) {
                             switch (deleteScanner.nextLine()) {
                             case "T":
@@ -226,9 +219,8 @@ public class Sunshine {
                     deleteScanner.close();
                     tempFile.renameTo(inputFile);
 
-                    Task task = list[indexUnmark-1];
-                    task.unmark();
-                    ui.showUnmarkSuccess(task);
+                    Task unmarkedTask = taskList.unmarkTask(indexUnmark);
+                    ui.showUnmarkSuccess(unmarkedTask);
                 } catch (NumberFormatException e) {
                     ui.showMissingIndex();
                 } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
@@ -254,9 +246,8 @@ public class Sunshine {
                     ui.showException("saving this task", e);
                     break;
                 }
-                list[taskCount] = todo;
-                taskCount++;
-                ui.showAddTaskSuccess(todo, taskCount);
+                taskList.addTask(todo);
+                ui.showAddTaskSuccess(todo, taskList.getTaskCount());
                 break;
             case "deadline":
                 String[] dlSplit = arg.split(" /by ");
@@ -274,9 +265,8 @@ public class Sunshine {
                     ui.showException("saving this task", e);
                     break;
                 }
-                list[taskCount] = dl;
-                taskCount++;
-                ui.showAddTaskSuccess(dl, taskCount);
+                taskList.addTask(dl);
+                ui.showAddTaskSuccess(dl, taskList.getTaskCount());
                 break;
             case "event":
                 Event ev;
@@ -296,9 +286,8 @@ public class Sunshine {
                     ui.showException("saving this task", e);
                     break;
                 }
-                list[taskCount] = ev;
-                taskCount++;
-                ui.showAddTaskSuccess(ev, taskCount);
+                taskList.addTask(ev);
+                ui.showAddTaskSuccess(ev, taskList.getTaskCount());
                 break;
             case "delete":
                 int indexDelete = Integer.parseInt(arg);
@@ -310,7 +299,7 @@ public class Sunshine {
                     Scanner deleteScanner = new Scanner(inputFile);
                     FileWriter deleteWriter = new FileWriter(tempFile);
 
-                    for (int i = 1; i <= taskCount; i++) {
+                    for (int i = 1; i <= taskList.getTaskCount(); i++) {
                         if (i == indexDelete) {
                             switch (deleteScanner.nextLine()) {
                             case "T":
@@ -362,13 +351,8 @@ public class Sunshine {
                 } catch (IOException e) {
                     ui.showException("deleting this task", e);
                 }
-                Task task = list[indexDelete-1];
-                for (int i = indexDelete; i < taskCount; i++) {
-                    list[i-1] = list[i];
-                }
-                list[taskCount-1] = null;
-                taskCount--;
-                ui.showDeleteSuccess(task, taskCount);
+                Task task = taskList.deleteTask(indexDelete);
+                ui.showDeleteSuccess(task, taskList.getTaskCount());
                 break;
             default:
                 ui.showDefault();
