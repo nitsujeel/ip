@@ -9,6 +9,12 @@ public class Deadline extends Task {
     protected String byString;
     protected LocalDate byDate;
 
+    /**
+     * Initialises a Deadline object.
+     *
+     * @param description Description of the task.
+     * @param by Deadline of the task.
+     */
     public Deadline(String description, String by) {
         super(description);
         this.byString = by;

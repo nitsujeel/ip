@@ -10,6 +10,13 @@ public class Storage {
 
     private static final String FILE_PATH = "data" + File.separator + "sunshine.txt";
 
+    /**
+     * Loads saved Tasks from a local file into memory.
+     *
+     * @param taskList Destination to load Tasks into.
+     * @throws FileNotFoundException If local file does not exist.
+     * @throws EmptyDescriptionException If ToDo tasks are missing a description.
+     */
     public void load(TaskList taskList) throws FileNotFoundException, EmptyDescriptionException {
         File file = new File(FILE_PATH);
         Scanner scanner = new Scanner(file);
@@ -50,11 +57,22 @@ public class Storage {
         scanner.close();
     }
 
+    /**
+     * Creates a new file at FILE_PATH.
+     *
+     * @throws IOException If file creation is interrupted.
+     */
     public void createNewFile() throws IOException {
         File file = new File(FILE_PATH);
         file.createNewFile();
     }
 
+    /**
+     * Adds the representation of a ToDo to local file.
+     *
+     * @param description Description of the task.
+     * @throws IOException If file modification is interrupted.
+     */
     public void addToDo(String description) throws IOException {
         FileWriter fw = new FileWriter(FILE_PATH, true);
         fw.write("T" + System.lineSeparator() + "0" + System.lineSeparator() + description +
@@ -62,6 +80,13 @@ public class Storage {
         fw.close();
     }
 
+    /**
+     * Adds the representation of a Deadline to local file.
+     *
+     * @param description Description of the task.
+     * @param deadline Deadline of the task.
+     * @throws IOException If file modification is interrupted.
+     */
     public void addDeadline(String description, String deadline) throws IOException {
         FileWriter fw = new FileWriter(FILE_PATH, true);
         fw.write("D" + System.lineSeparator() + "0" + System.lineSeparator() + description +
@@ -69,6 +94,14 @@ public class Storage {
         fw.close();
     }
 
+    /**
+     * Adds the representation of an Event to local file.
+     *
+     * @param description Description of the task.
+     * @param from Start time of the task.
+     * @param to End time of the task.
+     * @throws IOException If file modification is interrupted.
+     */
     public void addEvent(String description, String from, String to) throws IOException {
         FileWriter fw = new FileWriter(FILE_PATH, true);
         fw.write("E" + System.lineSeparator() + "0" + System.lineSeparator() + description +
@@ -77,6 +110,13 @@ public class Storage {
         fw.close();
     }
 
+    /**
+     * Removes the representation of a Task from local file.
+     *
+     * @param index Index of the task, starting from 1.
+     * @param taskCount Current number of tasks before deletion.
+     * @throws IOException If file modification is interrupted.
+     */
     public void deleteEvent(int index, int taskCount) throws IOException {
         File inputFile = new File(FILE_PATH);
         File tempFile = new File("data" + File.separator + "temp.txt");
@@ -110,6 +150,13 @@ public class Storage {
         tempFile.renameTo(inputFile);
     }
 
+    /**
+     * Marks a Task as done in local file.
+     *
+     * @param index Index of the task, starting from 1.
+     * @param taskCount Current number of tasks.
+     * @throws IOException If file modification is interrupted.
+     */
     public void markEvent(int index, int taskCount) throws IOException {
         File inputFile = new File(FILE_PATH);
         File tempFile = new File("data" + File.separator + "temp.txt");
@@ -147,6 +194,13 @@ public class Storage {
         tempFile.renameTo(inputFile);
     }
 
+    /**
+     * Unmarks a Task as done in local file.
+     *
+     * @param index Index of the task, starting from 1.
+     * @param taskCount Current number of tasks.
+     * @throws IOException If file modification is interrupted.
+     */
     public void unmarkEvent(int index, int taskCount) throws IOException {
         File inputFile = new File(FILE_PATH);
         File tempFile = new File("data" + File.separator + "temp.txt");

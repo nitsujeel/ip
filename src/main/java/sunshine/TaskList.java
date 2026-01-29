@@ -5,11 +5,19 @@ public class TaskList {
     private Task[] list;
     private int taskCount;
 
+    /**
+     * Initialises a TaskList object.
+     */
     public TaskList() {
         this.list = new Task[100];
         this.taskCount = 0;
     }
 
+    /**
+     * Adds a Task to the list.
+     *
+     * @param task Task to add to the list.
+     */
     public void addTask(Task task) {
         this.list[taskCount++] = task;
     }
@@ -18,18 +26,36 @@ public class TaskList {
         return this.taskCount;
     }
 
+    /**
+     * Marks the Task at index as completed.
+     *
+     * @param index Index of Task to be marked.
+     * @return Task marked as completed.
+     */
     public Task markTask(int index) {
         Task task = this.list[index - 1];
         task.mark();
         return task;
     }
 
+    /**
+     * Unmarks the Task at index, resetting it to uncompleted.
+     *
+     * @param index Index of Task to be unmarked.
+     * @return Task unmarked.
+     */
     public Task unmarkTask(int index) {
         Task task = this.list[index - 1];
         task.unmark();
         return task;
     }
 
+    /**
+     * Deletes a Task from the list.
+     *
+     * @param index Index of Task to be deleted.
+     * @return Task that was deleted.
+     */
     public Task deleteTask(int index) {
         if (index > taskCount) {
             throw new IndexOutOfBoundsException("Index is out of bounds");
@@ -43,6 +69,7 @@ public class TaskList {
         return task;
     }
 
+    @Override
     public String toString() {
         String result = "";
         for (int i = 0; i < this.taskCount; i++) {
