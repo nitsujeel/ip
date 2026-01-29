@@ -1,12 +1,8 @@
 T
-0
+1
 todo
-D
-0
-dl
-by
 E
-0
-e
+1
+ev
 fr
-t
+to
