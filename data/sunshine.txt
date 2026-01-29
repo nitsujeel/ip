@@ -6,3 +6,18 @@ to
 T
 0
 hello
+T
+0
+todo_name
+T
+0
+todo name 1 2 3
+E
+0
+hello this is an event
+starting here
+and ending here
+D
+0
+this is a deadline due on
+15/02/2015

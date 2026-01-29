@@ -33,10 +33,9 @@ public class Sunshine {
         Scanner scanner = new Scanner(System.in);
         boolean exit = false;
         do {
-            String input = scanner.nextLine();
-            String[] parts = input.split("\s", 2);
-            String cmd = parts[0];
-            String arg = (parts.length == 2) ? parts[1] : "";
+            String[] parsedInput = Parser.parseInput(scanner.nextLine());
+            String cmd = parsedInput[0];
+            String arg = parsedInput[1];
             switch (cmd) {
             case "bye":
                 exit = true;
@@ -46,7 +45,7 @@ public class Sunshine {
                 break;
             case "mark":
                 try {
-                    int indexMark = Integer.parseInt(arg);
+                    int indexMark = Parser.parseInt(arg);
                     storage.markEvent(indexMark, taskList.getTaskCount());
                     Task markedTask = taskList.markTask(indexMark);
                     ui.showMarkSuccess(markedTask);
@@ -62,7 +61,7 @@ public class Sunshine {
                 break;
             case "unmark":
                 try {
-                    int indexUnmark = Integer.parseInt(arg);
+                    int indexUnmark = Parser.parseInt(arg);
                     storage.unmarkEvent(indexUnmark, taskList.getTaskCount());
                     Task unmarkedTask = taskList.unmarkTask(indexUnmark);
                     ui.showUnmarkSuccess(unmarkedTask);
@@ -92,11 +91,11 @@ public class Sunshine {
                 ui.showAddTaskSuccess(todo, taskList.getTaskCount());
                 break;
             case "deadline":
-                String[] dlSplit = arg.split(" /by ");
+                String[] dlSplits = Parser.parseDeadline(arg);
                 Deadline dl;
                 try {
-                    dl = new Deadline(dlSplit[0], dlSplit[1]);
-                    storage.addDeadline(dlSplit[0], dlSplit[1]);
+                    dl = new Deadline(dlSplits[0], dlSplits[1]);
+                    storage.addDeadline(dlSplits[0], dlSplits[1]);
                 } catch (ArrayIndexOutOfBoundsException e) {
                     ui.showDeadlineFormat();
                     break;
@@ -110,10 +109,9 @@ public class Sunshine {
             case "event":
                 Event ev;
                 try {
-                    String[] eSplit1 = arg.split(" /from ");
-                    String[] eSplit2 = eSplit1[1].split(" /to ");
-                    ev = new Event(eSplit1[0], eSplit2[0], eSplit2[1]);
-                    storage.addEvent(eSplit1[0], eSplit2[0], eSplit2[1]);
+                    String[] eSplits = Parser.parseEvent(arg);
+                    ev = new Event(eSplits[0], eSplits[1], eSplits[2]);
+                    storage.addEvent(eSplits[0], eSplits[1], eSplits[2]);
                 } catch (ArrayIndexOutOfBoundsException e) {
                     ui.showEventFormat();
                     break;
@@ -125,7 +123,7 @@ public class Sunshine {
                 ui.showAddTaskSuccess(ev, taskList.getTaskCount());
                 break;
             case "delete":
-                int indexDelete = Integer.parseInt(arg);
+                int indexDelete = Parser.parseInt(arg);
                 try {
                     storage.deleteEvent(indexDelete, taskList.getTaskCount());
                 } catch (FileNotFoundException e) {
