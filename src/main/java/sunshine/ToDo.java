@@ -1,5 +1,8 @@
 package sunshine;
 
+/**
+ * A task with only a description.
+ */
 public class ToDo extends Task {
 
     /**

@@ -1,5 +1,8 @@
 package sunshine;
 
+/**
+ * A task with a start and end time.
+ */
 public class Event extends Task {
 
     protected String from;

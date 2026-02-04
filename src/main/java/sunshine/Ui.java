@@ -1,16 +1,10 @@
 package sunshine;
 
+/**
+ * Class that deals with outputs shown to the user.
+ */
 public class Ui {
-    private static final String LINE = "\t____________________________________________________________\n";
     private static final String ERROR_PREFIX = "BURUH!! ";
-
-    private void print(String... lines) {
-        System.out.print(LINE);
-        for (String line : lines) {
-            System.out.println("\t " + line);
-        }
-        System.out.println(LINE);
-    }
 
     /**
      * Prints an Exception message.
@@ -18,9 +12,8 @@ public class Ui {
      * @param description Explanation of what was trying to be executed.
      * @param e Exception thrown.
      */
-    public void showException(String description, Exception e) {
-        this.print(ERROR_PREFIX + "Something went wrong " + description + ":",
-                e.getMessage());
+    public String showException(String description, Exception e) {
+        return ERROR_PREFIX + "Something went wrong " + description + ": " + e.getMessage();
     }
 
     /**
@@ -28,24 +21,22 @@ public class Ui {
      *
      * @param taskCount Number of tasks loaded.
      */
-    public void showLoadSuccess(int taskCount) {
-        this.print("Local file loaded!",
-                "You've been procrastinating " + taskCount + " task(s).");
+    public String showLoadSuccess(int taskCount) {
+        return "Local file loaded!\nYou've been procrastinating " + taskCount + " task(s).";
     }
 
     /**
-     * Prints a message for when there are no saved tasks.
+     * Prints a message for when no local save file is found, and a new one is created.
      */
-    public void showLoadFail() {
-        this.print("Seems like you don't have any saved tasks.");
+    public String showLoadNew() {
+        return "Seems like you don't have any saved tasks.\nCreated a new local save file for ya.";
     }
 
     /**
      * Prints welcome message.
      */
-    public void showWelcome() {
-        this.print("Hello! I'm Sunshine :)",
-                "What can I do for you?");
+    public String showWelcome() {
+        return "Hello! I'm Sunshine :)\nWhat can I do for you?";
     }
 
     /**
@@ -53,9 +44,9 @@ public class Ui {
      *
      * @param taskList TaskList to be printed.
      */
-    public void showList(TaskList taskList) {
-        this.print("Here are the tasks in your list:",
-                taskList.toString());
+    public String showList(TaskList taskList) {
+        return taskList.getTaskCount() == 0 ? "There are no tasks in your list."
+                : "Here are the tasks in your list:\n" + taskList.toString();
     }
 
     /**
@@ -63,30 +54,29 @@ public class Ui {
      *
      * @param task Task marked.
      */
-    public void showMarkSuccess(Task task) {
-        this.print("Good job bubs! I've marked this task as done:",
-                task.toString());
+    public String showMarkSuccess(Task task) {
+        return "Good job bubs! I've marked this task as done:\n" + task.toString();
     }
 
     /**
      * Prints a message when the task index is not specified.
      */
-    public void showMissingIndex() {
-        this.print(ERROR_PREFIX + "Which one la?");
+    public String showMissingIndex() {
+        return ERROR_PREFIX + "Which one la?";
     }
 
     /**
      * Prints a message when the task index is beyond the current task count.
      */
-    public void showIndexOutofBounds() {
-        this.print(ERROR_PREFIX + "You don't even have that many tasks, stop gaslighting me.");
+    public String showIndexOutofBounds() {
+        return ERROR_PREFIX + "You don't even have that many tasks, stop gaslighting me.";
     }
 
     /**
      * Prints a message when the local file cannot be found.
      */
-    public void showFileNotFound() {
-        this.print(ERROR_PREFIX + "I can't find the save file!!");
+    public String showFileNotFound() {
+        return ERROR_PREFIX + "I can't find the save file!!";
     }
 
     /**
@@ -94,9 +84,8 @@ public class Ui {
      *
      * @param task Task unmarked.
      */
-    public void showUnmarkSuccess(Task task) {
-        this.print("So you lied to me la. I've marked this task as not done yet:",
-                task.toString());
+    public String showUnmarkSuccess(Task task) {
+        return "So you lied to me la. I've marked this task as not done yet:\n" + task.toString();
     }
 
     /**
@@ -105,31 +94,30 @@ public class Ui {
      * @param task Task added.
      * @param taskCount Number of tasks after addition.
      */
-    public void showAddTaskSuccess(Task task, int taskCount) {
-        this.print("Got it. I've added this task:",
-                task.toString(),
-                "Now you have " + taskCount + " task(s) in the list.");
+    public String showAddTaskSuccess(Task task, int taskCount) {
+        return "Got it. I've added this task:\n" + task.toString()
+                + "\nNow you have " + taskCount + " task(s) in the list.";
     }
 
     /**
      * Prints a message for failed addition of ToDo to the list.
      */
-    public void showToDoFormat() {
-        this.print(ERROR_PREFIX + "A ToDo must have a description.");
+    public String showToDoFormat() {
+        return ERROR_PREFIX + "A ToDo must have a description.";
     }
 
     /**
      * Prints a message for failed addition of Deadline to the list.
      */
-    public void showDeadlineFormat() {
-        this.print(ERROR_PREFIX + "A Deadline must have a description and a /by.");
+    public String showDeadlineFormat() {
+        return ERROR_PREFIX + "A Deadline must have a description and a /by.";
     }
 
     /**
      * Prints a message for failed addition of Event to the list.
      */
-    public void showEventFormat() {
-        this.print(ERROR_PREFIX + "An Event must have a description, a /from, and a /to.");
+    public String showEventFormat() {
+        return ERROR_PREFIX + "An Event must have a description, a /from, and a /to.";
     }
 
     /**
@@ -138,10 +126,9 @@ public class Ui {
      * @param task Task deleted.
      * @param taskCount Number of tasks after deletion.
      */
-    public void showDeleteSuccess(Task task, int taskCount) {
-        this.print("You bum. I've removed this task:",
-                task.toString(),
-                "Now you have " + taskCount + " task(s) in the list.");
+    public String showDeleteSuccess(Task task, int taskCount) {
+        return "You bum. I've removed this task:\n" + task.toString()
+                + "\nNow you have " + taskCount + " task(s) in the list.";
     }
 
     /**
@@ -149,23 +136,21 @@ public class Ui {
      *
      * @param taskList List of Tasks found from the search.
      */
-    public void showResults(TaskList taskList) {
-        this.print("Here's what I found, bubs:",
-                taskList.toString());
+    public String showResults(TaskList taskList) {
+        return "Here's what I found, bubs:\n" + taskList.toString();
     }
 
     /**
      * Prints the default message when the command is not recognised.
      */
-    public void showDefault() {
-        this.print("Huh? I don't gets.");
+    public String showDefault() {
+        return "Huh? I don't gets.";
     }
 
     /**
      * Prints a farewell message.
      */
-    public void showFarewell() {
-        this.print("Goodnight, rest well and sweet dreams.",
-                "Hope to see you again soon!");
+    public String showFarewell() {
+        return "Goodnight, rest well and sweet dreams.\nHope to see you again soon!";
     }
 }
