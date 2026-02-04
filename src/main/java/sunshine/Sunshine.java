@@ -149,4 +149,14 @@ public class Sunshine {
         // Farewell
         ui.showFarewell();
     }
+
+    /**
+     * Generates a response to the user's chat message.
+     *
+     * @param input User's input.
+     * @return Sunshine's response.
+     */
+    public String getResponse(String input) {
+        return "Sunshine heard: " + input;
+    }
 }
