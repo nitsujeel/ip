@@ -2,152 +2,47 @@ package sunshine;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.util.Scanner;
+import java.util.NoSuchElementException;
 
+/**
+ * Represents a chatbot task manager.
+ */
 public class Sunshine {
+    private TaskList taskList;
+    private Storage storage;
+    private Ui ui;
 
-    public static void main(String[] args) {
+    /**
+     * Constructor for a Sunshine object.
+     */
+    public Sunshine() {
+        taskList = new TaskList();
+        storage = new Storage();
+        ui = new Ui();
+    }
 
-        Ui ui = new Ui();
-        TaskList taskList = new TaskList();
-        Storage storage = new Storage();
-
-        // Load locally saved data
+    /**
+     * Loads tasks from local file into memory.
+     * @return String indicating the success or failure of the loading.
+     */
+    public String loadTasks() {
         try {
             storage.load(taskList);
-            ui.showLoadSuccess(taskList.getTaskCount());
+            return ui.showLoadSuccess(taskList.getTaskCount());
         } catch (FileNotFoundException e) {
-            ui.showLoadFail();
             try {
                 storage.createNewFile();
+                return ui.showLoadNew();
             } catch (IOException ex) {
-                ui.showException("creating a new save file", ex);
+                return ui.showException("creating a new save file", ex);
             }
-        } catch (EmptyDescriptionException e) {
-            ui.showException("loading your saved tasks", e);
+        } catch (EmptyDescriptionException | IOException e) {
+            return ui.showException("loading your saved tasks", e);
         }
+    }
 
-        // Welcome
-        ui.showWelcome();
-
-        // Main loop
-        Scanner scanner = new Scanner(System.in);
-        boolean exit = false;
-        do {
-            String[] parsedInput = Parser.parseInput(scanner.nextLine());
-            String cmd = parsedInput[0];
-            String arg = parsedInput[1];
-            switch (cmd) {
-            case "bye":
-                exit = true;
-                break;
-            case "list":
-                ui.showList(taskList);
-                break;
-            case "mark":
-                try {
-                    int indexMark = Parser.parseInt(arg);
-                    storage.markEvent(indexMark, taskList.getTaskCount());
-                    Task markedTask = taskList.markTask(indexMark);
-                    ui.showMarkSuccess(markedTask);
-                } catch (NumberFormatException e) {
-                    ui.showMissingIndex();
-                } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
-                    ui.showIndexOutofBounds();
-                } catch (FileNotFoundException e) {
-                    ui.showFileNotFound();
-                } catch (IOException e) {
-                    ui.showException("marking this task", e);
-                }
-                break;
-            case "unmark":
-                try {
-                    int indexUnmark = Parser.parseInt(arg);
-                    storage.unmarkEvent(indexUnmark, taskList.getTaskCount());
-                    Task unmarkedTask = taskList.unmarkTask(indexUnmark);
-                    ui.showUnmarkSuccess(unmarkedTask);
-                } catch (NumberFormatException e) {
-                    ui.showMissingIndex();
-                } catch (NullPointerException | ArrayIndexOutOfBoundsException e) {
-                    ui.showIndexOutofBounds();
-                } catch (FileNotFoundException e) {
-                    ui.showFileNotFound();
-                } catch (IOException e) {
-                    ui.showException("unmarking this task", e);
-                }
-                break;
-            case "todo":
-                ToDo todo;
-                try {
-                    todo = new ToDo(arg);
-                    storage.addToDo(arg);
-                } catch (EmptyDescriptionException e) {
-                    ui.showToDoFormat();
-                    break;
-                } catch (IOException e) {
-                    ui.showException("saving this task", e);
-                    break;
-                }
-                taskList.addTask(todo);
-                ui.showAddTaskSuccess(todo, taskList.getTaskCount());
-                break;
-            case "deadline":
-                String[] dlSplits = Parser.parseDeadline(arg);
-                Deadline dl;
-                try {
-                    dl = new Deadline(dlSplits[0], dlSplits[1]);
-                    storage.addDeadline(dlSplits[0], dlSplits[1]);
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    ui.showDeadlineFormat();
-                    break;
-                } catch (IOException e) {
-                    ui.showException("saving this task", e);
-                    break;
-                }
-                taskList.addTask(dl);
-                ui.showAddTaskSuccess(dl, taskList.getTaskCount());
-                break;
-            case "event":
-                Event ev;
-                try {
-                    String[] eSplits = Parser.parseEvent(arg);
-                    ev = new Event(eSplits[0], eSplits[1], eSplits[2]);
-                    storage.addEvent(eSplits[0], eSplits[1], eSplits[2]);
-                } catch (ArrayIndexOutOfBoundsException e) {
-                    ui.showEventFormat();
-                    break;
-                } catch (IOException e) {
-                    ui.showException("saving this task", e);
-                    break;
-                }
-                taskList.addTask(ev);
-                ui.showAddTaskSuccess(ev, taskList.getTaskCount());
-                break;
-            case "delete":
-                int indexDelete = Parser.parseInt(arg);
-                try {
-                    storage.deleteEvent(indexDelete, taskList.getTaskCount());
-                } catch (FileNotFoundException e) {
-                    ui.showFileNotFound();
-                } catch (IOException e) {
-                    ui.showException("deleting this task", e);
-                } catch (IndexOutOfBoundsException e) {
-                    ui.showIndexOutofBounds();
-                }
-                Task task = taskList.deleteTask(indexDelete);
-                ui.showDeleteSuccess(task, taskList.getTaskCount());
-                break;
-            case "find":
-                TaskList results = taskList.findTasks(arg);
-                ui.showResults(results);
-                break;
-            default:
-                ui.showDefault();
-            }
-        } while (!exit);
-
-        // Farewell
-        ui.showFarewell();
+    public String getWelcomeMessage() {
+        return ui.showWelcome();
     }
 
     /**
@@ -157,6 +52,99 @@ public class Sunshine {
      * @return Sunshine's response.
      */
     public String getResponse(String input) {
-        return "Sunshine heard: " + input;
+        String[] parsedInput = Parser.parseInput(input);
+        String cmd = parsedInput[0];
+        String arg = parsedInput[1];
+        switch (cmd) {
+        case "bye":
+            return ui.showFarewell();
+        case "list":
+            return ui.showList(taskList);
+        case "mark":
+            try {
+                int indexMark = Parser.parseInt(arg);
+                storage.markEvent(indexMark, taskList.getTaskCount());
+                Task markedTask = taskList.markTask(indexMark);
+                return ui.showMarkSuccess(markedTask);
+            } catch (NumberFormatException e) {
+                return ui.showMissingIndex();
+            } catch (NullPointerException | ArrayIndexOutOfBoundsException | NoSuchElementException e) {
+                return ui.showIndexOutofBounds();
+            } catch (FileNotFoundException e) {
+                return ui.showFileNotFound();
+            } catch (IOException e) {
+                return ui.showException("marking this task", e);
+            }
+        case "unmark":
+            try {
+                int indexUnmark = Parser.parseInt(arg);
+                storage.unmarkEvent(indexUnmark, taskList.getTaskCount());
+                Task unmarkedTask = taskList.unmarkTask(indexUnmark);
+                return ui.showUnmarkSuccess(unmarkedTask);
+            } catch (NumberFormatException e) {
+                return ui.showMissingIndex();
+            } catch (NullPointerException | ArrayIndexOutOfBoundsException | NoSuchElementException e) {
+                return ui.showIndexOutofBounds();
+            } catch (FileNotFoundException e) {
+                return ui.showFileNotFound();
+            } catch (IOException e) {
+                return ui.showException("unmarking this task", e);
+            }
+        case "todo":
+            try {
+                ToDo todo = new ToDo(arg);
+                storage.addToDo(arg);
+                taskList.addTask(todo);
+                return ui.showAddTaskSuccess(todo, taskList.getTaskCount());
+            } catch (EmptyDescriptionException e) {
+                return ui.showToDoFormat();
+            } catch (IOException e) {
+                return ui.showException("saving this task", e);
+            }
+        case "deadline":
+            try {
+                String[] dlSplits = Parser.parseDeadline(arg);
+                Deadline dl = new Deadline(dlSplits[0], dlSplits[1]);
+                storage.addDeadline(dlSplits[0], dlSplits[1]);
+                taskList.addTask(dl);
+                return ui.showAddTaskSuccess(dl, taskList.getTaskCount());
+            } catch (ArrayIndexOutOfBoundsException e) {
+                return ui.showDeadlineFormat();
+            } catch (IOException e) {
+                return ui.showException("saving this task", e);
+            }
+        case "event":
+            try {
+                String[] eSplits = Parser.parseEvent(arg);
+                Event ev = new Event(eSplits[0], eSplits[1], eSplits[2]);
+                storage.addEvent(eSplits[0], eSplits[1], eSplits[2]);
+                taskList.addTask(ev);
+                return ui.showAddTaskSuccess(ev, taskList.getTaskCount());
+            } catch (ArrayIndexOutOfBoundsException e) {
+                return ui.showEventFormat();
+            } catch (IOException e) {
+                return ui.showException("saving this task", e);
+            }
+        case "delete":
+            try {
+                int indexDelete = Parser.parseInt(arg);
+                storage.deleteEvent(indexDelete, taskList.getTaskCount());
+                Task task = taskList.deleteTask(indexDelete);
+                return ui.showDeleteSuccess(task, taskList.getTaskCount());
+            } catch (NumberFormatException e) {
+                return ui.showMissingIndex();
+            } catch (FileNotFoundException e) {
+                return ui.showFileNotFound();
+            } catch (IOException e) {
+                return ui.showException("deleting this task", e);
+            } catch (IndexOutOfBoundsException | NoSuchElementException e) {
+                return ui.showIndexOutofBounds();
+            }
+        case "find":
+            TaskList results = taskList.findTasks(arg);
+            return ui.showResults(results);
+        default:
+            return ui.showDefault();
+        }
     }
 }

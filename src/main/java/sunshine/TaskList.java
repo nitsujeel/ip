@@ -1,5 +1,9 @@
 package sunshine;
 
+
+/**
+ * Representation of the lists of tasks.
+ */
 public class TaskList {
 
     private Task[] list;
@@ -73,7 +77,7 @@ public class TaskList {
     public String toString() {
         String result = "";
         for (int i = 0; i < this.taskCount; i++) {
-            result += "\t " + (i + 1) + ". " + list[i] + "\n";
+            result += (i + 1) + ". " + list[i] + "\n";
         }
         return result.trim();
     }

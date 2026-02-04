@@ -6,6 +6,9 @@ import java.io.FileWriter;
 import java.io.IOException;
 import java.util.Scanner;
 
+/**
+ * Class that deals with reading and writing to the local file.
+ */
 public class Storage {
 
     private static final String FILE_PATH = "data" + File.separator + "sunshine.txt";
@@ -17,7 +20,7 @@ public class Storage {
      * @throws FileNotFoundException If local file does not exist.
      * @throws EmptyDescriptionException If ToDo tasks are missing a description.
      */
-    public void load(TaskList taskList) throws FileNotFoundException, EmptyDescriptionException {
+    public void load(TaskList taskList) throws IOException, EmptyDescriptionException {
         File file = new File(FILE_PATH);
         Scanner scanner = new Scanner(file);
         while (scanner.hasNext()) {
@@ -52,6 +55,8 @@ public class Storage {
                 }
                 taskList.addTask(ev);
                 break;
+            default:
+                throw new IOException();
             }
         }
         scanner.close();
@@ -75,8 +80,8 @@ public class Storage {
      */
     public void addToDo(String description) throws IOException {
         FileWriter fw = new FileWriter(FILE_PATH, true);
-        fw.write("T" + System.lineSeparator() + "0" + System.lineSeparator() + description +
-                System.lineSeparator());
+        fw.write("T" + System.lineSeparator() + "0" + System.lineSeparator() + description
+                + System.lineSeparator());
         fw.close();
     }
 
@@ -89,8 +94,8 @@ public class Storage {
      */
     public void addDeadline(String description, String deadline) throws IOException {
         FileWriter fw = new FileWriter(FILE_PATH, true);
-        fw.write("D" + System.lineSeparator() + "0" + System.lineSeparator() + description +
-                System.lineSeparator() + deadline + System.lineSeparator());
+        fw.write("D" + System.lineSeparator() + "0" + System.lineSeparator() + description
+                + System.lineSeparator() + deadline + System.lineSeparator());
         fw.close();
     }
 
@@ -104,9 +109,9 @@ public class Storage {
      */
     public void addEvent(String description, String from, String to) throws IOException {
         FileWriter fw = new FileWriter(FILE_PATH, true);
-        fw.write("E" + System.lineSeparator() + "0" + System.lineSeparator() + description +
-                System.lineSeparator() + from + System.lineSeparator() + to +
-                System.lineSeparator());
+        fw.write("E" + System.lineSeparator() + "0" + System.lineSeparator() + description
+                + System.lineSeparator() + from + System.lineSeparator() + to
+                + System.lineSeparator());
         fw.close();
     }
 
@@ -141,6 +146,8 @@ public class Storage {
             for (int j = 0; j < 4; j++) {
                 scanner.nextLine();
             }
+            break;
+        default:
             break;
         }
         copyLines(scanner, writer, taskCount - index);
@@ -186,6 +193,8 @@ public class Storage {
                 writer.write(scanner.nextLine() + "\n");
             }
             break;
+        default:
+            break;
         }
         copyLines(scanner, writer, taskCount - index);
 
@@ -230,6 +239,8 @@ public class Storage {
                 writer.write(scanner.nextLine() + "\n");
             }
             break;
+        default:
+            break;
         }
         copyLines(scanner, writer, taskCount - index);
 
@@ -258,6 +269,8 @@ public class Storage {
                 for (int j = 0; j < 4; j++) {
                     writer.write(scanner.nextLine() + "\n");
                 }
+                break;
+            default:
                 break;
             }
         }

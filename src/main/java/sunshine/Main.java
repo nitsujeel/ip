@@ -9,7 +9,7 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.Stage;
 
 /**
- * A GUI for Duke using FXML.
+ * A GUI for Sunshine using FXML.
  */
 public class Main extends Application {
 
@@ -22,12 +22,16 @@ public class Main extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
-            fxmlLoader.<MainWindow>getController().setDuke(sunshine);  // inject the Sunshine instance
+            MainWindow mainWindow = fxmlLoader.getController();
+            mainWindow.setStage(stage);
+            mainWindow.setSunshine(sunshine); // inject the Sunshine instance
+            String loadResultString = sunshine.loadTasks();
+            mainWindow.showLoadResult(loadResultString);
+            mainWindow.showWelcome();
             stage.show();
         } catch (IOException e) {
             e.printStackTrace();
         }
     }
 }
-
 

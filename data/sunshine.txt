@@ -1,20 +1,9 @@
-E
-0
-event name
-from
-to
-T
-0
-todo name 1 2 3
-E
-0
-hello this is an event
-starting here
-and ending here
 D
-1
-this is a deadline due on
-15/02/2015
-T
 0
-testing
+sleep
+neow
+E
+0
+SLEEP
+now
+9am

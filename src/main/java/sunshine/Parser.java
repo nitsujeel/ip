@@ -1,5 +1,8 @@
 package sunshine;
 
+/**
+ * Class to deal with parsing the user's input.
+ */
 public class Parser {
 
     /**

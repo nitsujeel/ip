@@ -1,9 +1,12 @@
 package sunshine;
 
+import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
-import java.time.LocalDate;
 
+/**
+ * A task with a due time.
+ */
 public class Deadline extends Task {
 
     protected String byString;
@@ -31,8 +34,8 @@ public class Deadline extends Task {
         if (this.byDate == null) {
             return "[D]" + super.toString() + " (by: " + byString + ")";
         } else {
-            return "[D]" + super.toString() + " (by: " +
-                    this.byDate.format(DateTimeFormatter.ofPattern("d MMM yyyy")) + ")";
+            return "[D]" + super.toString() + " (by: "
+                    + this.byDate.format(DateTimeFormatter.ofPattern("d MMM yyyy")) + ")";
         }
     }
 }
