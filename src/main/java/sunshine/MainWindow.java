@@ -17,7 +17,7 @@ import javafx.util.Duration;
  */
 public class MainWindow extends AnchorPane {
 
-    private final static int EXIT_DELAY_SECONDS = 3;
+    private static final int EXIT_DELAY_SECONDS = 3;
 
     @FXML
     private ScrollPane scrollPane;

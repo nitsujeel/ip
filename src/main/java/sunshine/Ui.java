@@ -154,6 +154,9 @@ public class Ui {
         return "Goodnight, rest well and sweet dreams.\nHope to see you again soon!";
     }
 
+    /**
+     * Prints a help message with commands and their functionalities.
+     */
     public String showHelp() {
         return "You everything also don't know one.\n\n"
                 + "Here's a list of commands you can use:\n\n"
