@@ -36,7 +36,7 @@ public class Ui {
      * Prints welcome message.
      */
     public String showWelcome() {
-        return "Hello! I'm Sunshine :)\nWhat can I do for you?";
+        return "Hello! I'm Sunshine :)\nWhat can I do for you?\n(Say \"help\" if you need some ideas!)";
     }
 
     /**
@@ -152,5 +152,20 @@ public class Ui {
      */
     public String showFarewell() {
         return "Goodnight, rest well and sweet dreams.\nHope to see you again soon!";
+    }
+
+    public String showHelp() {
+        return "You everything also don't know one.\n\n"
+                + "Here's a list of commands you can use:\n\n"
+                + "help\nShow this list of commands\n\n"
+                + "list\nShow your current list of tasks\n\n"
+                + "todo <description>\nAdd a ToDo Task to your list\n\n"
+                + "deadline <description> /by <due>\nAdd a Deadline Task to your list\n\n"
+                + "event <description> /from <start> /to <end>\nAdd an Event Task to your list\n\n"
+                + "mark <index>\nMark the indexed task as done\n\n"
+                + "unmark <index>\nUnmark the indexed task as yet to be done\n\n"
+                + "delete <index>\nDelete the indexed task from your list\n\n"
+                + "find <keywords>\nSearch your list for tasks that match\n\n"
+                + "bye\nSay goodbye to me!";
     }
 }
