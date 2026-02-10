@@ -26,34 +26,13 @@ public class Storage {
         while (scanner.hasNext()) {
             switch (scanner.nextLine()) {
             case "T":
-                String tdDone = scanner.nextLine();
-                String tdDesc = scanner.nextLine();
-                ToDo td = new ToDo(tdDesc);
-                if (tdDone.equals("1")) {
-                    td.mark();
-                }
-                taskList.addTask(td);
+                handleToDoLoad(scanner, taskList);
                 break;
             case "D":
-                String dlDone = scanner.nextLine();
-                String dlDesc = scanner.nextLine();
-                String dlBy = scanner.nextLine();
-                Deadline dl = new Deadline(dlDesc, dlBy);
-                if (dlDone.equals("1")) {
-                    dl.mark();
-                }
-                taskList.addTask(dl);
+                handleDeadlineLoad(scanner, taskList);
                 break;
             case "E":
-                String evDone = scanner.nextLine();
-                String evDesc = scanner.nextLine();
-                String evFrom = scanner.nextLine();
-                String evTo = scanner.nextLine();
-                Event ev = new Event(evDesc, evFrom, evTo);
-                if (evDone.equals("1")) {
-                    ev.mark();
-                }
-                taskList.addTask(ev);
+                handleEventLoad(scanner, taskList);
                 break;
             default:
                 throw new IOException();
@@ -61,6 +40,40 @@ public class Storage {
         }
         scanner.close();
     }
+
+    private void handleToDoLoad(Scanner scanner, TaskList taskList) throws EmptyDescriptionException {
+        String tdDone = scanner.nextLine();
+        String tdDesc = scanner.nextLine();
+        ToDo td = new ToDo(tdDesc);
+        if (tdDone.equals("1")) {
+            td.mark();
+        }
+        taskList.addTask(td);
+    }
+
+    private void handleDeadlineLoad(Scanner scanner, TaskList taskList) {
+        String dlDone = scanner.nextLine();
+        String dlDesc = scanner.nextLine();
+        String dlBy = scanner.nextLine();
+        Deadline dl = new Deadline(dlDesc, dlBy);
+        if (dlDone.equals("1")) {
+            dl.mark();
+        }
+        taskList.addTask(dl);
+    }
+
+    private void handleEventLoad(Scanner scanner, TaskList taskList) {
+        String evDone = scanner.nextLine();
+        String evDesc = scanner.nextLine();
+        String evFrom = scanner.nextLine();
+        String evTo = scanner.nextLine();
+        Event ev = new Event(evDesc, evFrom, evTo);
+        if (evDone.equals("1")) {
+            ev.mark();
+        }
+        taskList.addTask(ev);
+    }
+
 
     /**
      * Creates a new file at FILE_PATH.
@@ -130,31 +143,31 @@ public class Storage {
         Scanner scanner = new Scanner(inputFile);
         FileWriter writer = new FileWriter(tempFile);
 
-        copyLines(scanner, writer, index - 1);
+        copyTasks(scanner, writer, index - 1);
         switch (scanner.nextLine()) {
         case "T":
-            for (int j = 0; j < 2; j++) {
-                scanner.nextLine();
-            }
+            skipLines(scanner, 2);
             break;
         case "D":
-            for (int j = 0; j < 3; j++) {
-                scanner.nextLine();
-            }
+            skipLines(scanner, 3);
             break;
         case "E":
-            for (int j = 0; j < 4; j++) {
-                scanner.nextLine();
-            }
+            skipLines(scanner, 4);
             break;
         default:
             break;
         }
-        copyLines(scanner, writer, taskCount - index);
+        copyTasks(scanner, writer, taskCount - index);
 
         writer.close();
         scanner.close();
         tempFile.renameTo(inputFile);
+    }
+
+    private void skipLines(Scanner scanner, int numberOfLines) {
+        for (int i = 0; i < numberOfLines; i++) {
+            scanner.nextLine();
+        }
     }
 
     /**
@@ -172,35 +185,47 @@ public class Storage {
         Scanner scanner = new Scanner(inputFile);
         FileWriter writer = new FileWriter(tempFile);
 
-        copyLines(scanner, writer, index - 1);
+        copyTasks(scanner, writer, index - 1);
         switch (scanner.nextLine()) {
         case "T":
-            writer.write("T\n1\n");
-            scanner.nextLine();
-            writer.write(scanner.nextLine() + "\n");
+            handleToDoMark(writer, scanner);
             break;
         case "D":
-            writer.write("D\n1\n");
-            scanner.nextLine();
-            for (int j = 0; j < 2; j++) {
-                writer.write(scanner.nextLine() + "\n");
-            }
+            handleDeadlineMark(writer, scanner);
             break;
         case "E":
-            writer.write("E\n1\n");
-            scanner.nextLine();
-            for (int j = 0; j < 3; j++) {
-                writer.write(scanner.nextLine() + "\n");
-            }
+            handleEventMark(writer, scanner);
             break;
         default:
             break;
         }
-        copyLines(scanner, writer, taskCount - index);
+        copyTasks(scanner, writer, taskCount - index);
 
         writer.close();
         scanner.close();
         tempFile.renameTo(inputFile);
+    }
+
+    private void handleToDoMark(FileWriter writer, Scanner scanner) throws IOException {
+        writer.write("T\n1\n");
+        scanner.nextLine();
+        writer.write(scanner.nextLine() + "\n");
+    }
+
+    private void handleDeadlineMark(FileWriter writer, Scanner scanner) throws IOException {
+        writer.write("D\n1\n");
+        scanner.nextLine();
+        for (int j = 0; j < 2; j++) {
+            writer.write(scanner.nextLine() + "\n");
+        }
+    }
+
+    private void handleEventMark(FileWriter writer, Scanner scanner) throws IOException {
+        writer.write("E\n1\n");
+        scanner.nextLine();
+        for (int j = 0; j < 3; j++) {
+            writer.write(scanner.nextLine() + "\n");
+        }
     }
 
     /**
@@ -218,38 +243,50 @@ public class Storage {
         Scanner scanner = new Scanner(inputFile);
         FileWriter writer = new FileWriter(tempFile);
 
-        copyLines(scanner, writer, index - 1);
+        copyTasks(scanner, writer, index - 1);
         switch (scanner.nextLine()) {
         case "T":
-            writer.write("T\n0\n");
-            scanner.nextLine();
-            writer.write(scanner.nextLine() + "\n");
+            handleToDoUnmark(writer, scanner);
             break;
         case "D":
-            writer.write("D\n0\n");
-            scanner.nextLine();
-            for (int j = 0; j < 2; j++) {
-                writer.write(scanner.nextLine() + "\n");
-            }
+            handleDeadlineUnmark(writer, scanner);
             break;
         case "E":
-            writer.write("E\n0\n");
-            scanner.nextLine();
-            for (int j = 0; j < 3; j++) {
-                writer.write(scanner.nextLine() + "\n");
-            }
+            handleEventUnmark(writer, scanner);
             break;
         default:
             break;
         }
-        copyLines(scanner, writer, taskCount - index);
+        copyTasks(scanner, writer, taskCount - index);
 
         writer.close();
         scanner.close();
         tempFile.renameTo(inputFile);
     }
 
-    private void copyLines(Scanner scanner, FileWriter writer, int numberOfLines) throws IOException {
+    private void handleToDoUnmark(FileWriter writer, Scanner scanner) throws IOException {
+        writer.write("T\n0\n");
+        scanner.nextLine();
+        writer.write(scanner.nextLine() + "\n");
+    }
+
+    private void handleDeadlineUnmark(FileWriter writer, Scanner scanner) throws IOException {
+        writer.write("D\n0\n");
+        scanner.nextLine();
+        for (int j = 0; j < 2; j++) {
+            writer.write(scanner.nextLine() + "\n");
+        }
+    }
+
+    private void handleEventUnmark(FileWriter writer, Scanner scanner) throws IOException {
+        writer.write("E\n0\n");
+        scanner.nextLine();
+        for (int j = 0; j < 3; j++) {
+            writer.write(scanner.nextLine() + "\n");
+        }
+    }
+
+    private void copyTasks(Scanner scanner, FileWriter writer, int numberOfLines) throws IOException {
         for (int i = 0; i < numberOfLines; i++) {
             switch (scanner.nextLine()) {
             case "T":
