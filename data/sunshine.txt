@@ -1,9 +1,0 @@
-D
-0
-sleep
-neow
-E
-0
-SLEEP
-now
-9am

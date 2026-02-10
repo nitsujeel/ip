@@ -23,6 +23,7 @@ public class Sunshine {
 
     /**
      * Loads tasks from local file into memory.
+     *
      * @return String indicating the success or failure of the loading.
      */
     public String loadTasks() {
@@ -41,6 +42,11 @@ public class Sunshine {
         }
     }
 
+    /**
+     * Gets the welcome message to be printed upon starting Sunshine.
+     *
+     * @return Welcome message.
+     */
     public String getWelcomeMessage() {
         return ui.showWelcome();
     }
@@ -61,90 +67,114 @@ public class Sunshine {
         case "list":
             return ui.showList(taskList);
         case "mark":
-            try {
-                int indexMark = Parser.parseInt(arg);
-                storage.markEvent(indexMark, taskList.getTaskCount());
-                Task markedTask = taskList.markTask(indexMark);
-                return ui.showMarkSuccess(markedTask);
-            } catch (NumberFormatException e) {
-                return ui.showMissingIndex();
-            } catch (NullPointerException | ArrayIndexOutOfBoundsException | NoSuchElementException e) {
-                return ui.showIndexOutofBounds();
-            } catch (FileNotFoundException e) {
-                return ui.showFileNotFound();
-            } catch (IOException e) {
-                return ui.showException("marking this task", e);
-            }
+            return handleMark(arg, storage, taskList, ui);
         case "unmark":
-            try {
-                int indexUnmark = Parser.parseInt(arg);
-                storage.unmarkEvent(indexUnmark, taskList.getTaskCount());
-                Task unmarkedTask = taskList.unmarkTask(indexUnmark);
-                return ui.showUnmarkSuccess(unmarkedTask);
-            } catch (NumberFormatException e) {
-                return ui.showMissingIndex();
-            } catch (NullPointerException | ArrayIndexOutOfBoundsException | NoSuchElementException e) {
-                return ui.showIndexOutofBounds();
-            } catch (FileNotFoundException e) {
-                return ui.showFileNotFound();
-            } catch (IOException e) {
-                return ui.showException("unmarking this task", e);
-            }
+            return handleUnmark(arg, storage, taskList, ui);
         case "todo":
-            try {
-                ToDo todo = new ToDo(arg);
-                storage.addToDo(arg);
-                taskList.addTask(todo);
-                return ui.showAddTaskSuccess(todo, taskList.getTaskCount());
-            } catch (EmptyDescriptionException e) {
-                return ui.showToDoFormat();
-            } catch (IOException e) {
-                return ui.showException("saving this task", e);
-            }
+            return handleToDo(arg, storage, taskList, ui);
         case "deadline":
-            try {
-                String[] dlSplits = Parser.parseDeadline(arg);
-                Deadline dl = new Deadline(dlSplits[0], dlSplits[1]);
-                storage.addDeadline(dlSplits[0], dlSplits[1]);
-                taskList.addTask(dl);
-                return ui.showAddTaskSuccess(dl, taskList.getTaskCount());
-            } catch (ArrayIndexOutOfBoundsException e) {
-                return ui.showDeadlineFormat();
-            } catch (IOException e) {
-                return ui.showException("saving this task", e);
-            }
+            return handleDeadline(arg, storage, taskList, ui);
         case "event":
-            try {
-                String[] eSplits = Parser.parseEvent(arg);
-                Event ev = new Event(eSplits[0], eSplits[1], eSplits[2]);
-                storage.addEvent(eSplits[0], eSplits[1], eSplits[2]);
-                taskList.addTask(ev);
-                return ui.showAddTaskSuccess(ev, taskList.getTaskCount());
-            } catch (ArrayIndexOutOfBoundsException e) {
-                return ui.showEventFormat();
-            } catch (IOException e) {
-                return ui.showException("saving this task", e);
-            }
+            return handleEvent(arg, storage, taskList, ui);
         case "delete":
-            try {
-                int indexDelete = Parser.parseInt(arg);
-                storage.deleteEvent(indexDelete, taskList.getTaskCount());
-                Task task = taskList.deleteTask(indexDelete);
-                return ui.showDeleteSuccess(task, taskList.getTaskCount());
-            } catch (NumberFormatException e) {
-                return ui.showMissingIndex();
-            } catch (FileNotFoundException e) {
-                return ui.showFileNotFound();
-            } catch (IOException e) {
-                return ui.showException("deleting this task", e);
-            } catch (IndexOutOfBoundsException | NoSuchElementException e) {
-                return ui.showIndexOutofBounds();
-            }
+            return handleDelete(arg, storage, taskList, ui);
         case "find":
             TaskList results = taskList.findTasks(arg);
             return ui.showResults(results);
         default:
             return ui.showDefault();
+        }
+    }
+
+    private String handleMark(String arg, Storage storage, TaskList taskList, Ui ui) {
+        try {
+            int indexMark = Parser.parseInt(arg);
+            storage.markEvent(indexMark, taskList.getTaskCount());
+            Task markedTask = taskList.markTask(indexMark);
+            return ui.showMarkSuccess(markedTask);
+        } catch (NumberFormatException e) {
+            return ui.showMissingIndex();
+        } catch (NullPointerException | ArrayIndexOutOfBoundsException | NoSuchElementException e) {
+            return ui.showIndexOutofBounds();
+        } catch (FileNotFoundException e) {
+            return ui.showFileNotFound();
+        } catch (IOException e) {
+            return ui.showException("marking this task", e);
+        }
+    }
+
+    private String handleUnmark(String arg, Storage storage, TaskList taskList, Ui ui) {
+        try {
+            int indexUnmark = Parser.parseInt(arg);
+            storage.unmarkEvent(indexUnmark, taskList.getTaskCount());
+            Task unmarkedTask = taskList.unmarkTask(indexUnmark);
+            return ui.showUnmarkSuccess(unmarkedTask);
+        } catch (NumberFormatException e) {
+            return ui.showMissingIndex();
+        } catch (NullPointerException | ArrayIndexOutOfBoundsException | NoSuchElementException e) {
+            return ui.showIndexOutofBounds();
+        } catch (FileNotFoundException e) {
+            return ui.showFileNotFound();
+        } catch (IOException e) {
+            return ui.showException("unmarking this task", e);
+        }
+    }
+
+    private String handleToDo(String arg, Storage storage, TaskList taskList, Ui ui) {
+        try {
+            ToDo todo = new ToDo(arg);
+            storage.addToDo(arg);
+            taskList.addTask(todo);
+            return ui.showAddTaskSuccess(todo, taskList.getTaskCount());
+        } catch (EmptyDescriptionException e) {
+            return ui.showToDoFormat();
+        } catch (IOException e) {
+            return ui.showException("saving this task", e);
+        }
+    }
+
+    private String handleDeadline(String arg, Storage storage, TaskList taskList, Ui ui) {
+        try {
+            String[] dlSplits = Parser.parseDeadline(arg);
+            Deadline dl = new Deadline(dlSplits[0], dlSplits[1]);
+            storage.addDeadline(dlSplits[0], dlSplits[1]);
+            taskList.addTask(dl);
+            return ui.showAddTaskSuccess(dl, taskList.getTaskCount());
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return ui.showDeadlineFormat();
+        } catch (IOException e) {
+            return ui.showException("saving this task", e);
+        }
+    }
+
+    private String handleEvent(String arg, Storage storage, TaskList taskList, Ui ui) {
+        try {
+            String[] eSplits = Parser.parseEvent(arg);
+            Event ev = new Event(eSplits[0], eSplits[1], eSplits[2]);
+            storage.addEvent(eSplits[0], eSplits[1], eSplits[2]);
+            taskList.addTask(ev);
+            return ui.showAddTaskSuccess(ev, taskList.getTaskCount());
+        } catch (ArrayIndexOutOfBoundsException e) {
+            return ui.showEventFormat();
+        } catch (IOException e) {
+            return ui.showException("saving this task", e);
+        }
+    }
+
+    private String handleDelete(String arg, Storage storage, TaskList taskList, Ui ui) {
+        try {
+            int indexDelete = Parser.parseInt(arg);
+            storage.deleteEvent(indexDelete, taskList.getTaskCount());
+            Task task = taskList.deleteTask(indexDelete);
+            return ui.showDeleteSuccess(task, taskList.getTaskCount());
+        } catch (NumberFormatException e) {
+            return ui.showMissingIndex();
+        } catch (FileNotFoundException e) {
+            return ui.showFileNotFound();
+        } catch (IOException e) {
+            return ui.showException("deleting this task", e);
+        } catch (IndexOutOfBoundsException | NoSuchElementException e) {
+            return ui.showIndexOutofBounds();
         }
     }
 }

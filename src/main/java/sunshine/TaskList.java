@@ -6,6 +6,8 @@ package sunshine;
  */
 public class TaskList {
 
+    private static final int MAXIMUM_TASK_COUNT = 100;
+
     private Task[] list;
     private int taskCount;
 
@@ -13,7 +15,7 @@ public class TaskList {
      * Initialises a TaskList object.
      */
     public TaskList() {
-        this.list = new Task[100];
+        this.list = new Task[MAXIMUM_TASK_COUNT];
         this.taskCount = 0;
     }
 
