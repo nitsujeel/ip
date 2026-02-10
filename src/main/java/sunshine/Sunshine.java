@@ -81,6 +81,8 @@ public class Sunshine {
         case "find":
             TaskList results = taskList.findTasks(arg);
             return ui.showResults(results);
+        case "help":
+            return ui.showHelp();
         default:
             return ui.showDefault();
         }
