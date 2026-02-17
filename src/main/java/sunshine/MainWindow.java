@@ -79,16 +79,17 @@ public class MainWindow extends AnchorPane {
         if (isExitScheduled || input == null) {
             return;
         }
-        if ("bye".equalsIgnoreCase(input.trim())) {
-            isExitScheduled = true;
-            PauseTransition delay = new PauseTransition(EXIT_DELAY);
-            delay.setOnFinished(event -> {
-                if (stage != null) {
-                    stage.close();
-                }
-                Platform.exit();
-            });
-            delay.play();
+        if (!"bye".equalsIgnoreCase(input.trim())) {
+            return;
         }
+        isExitScheduled = true;
+        PauseTransition delay = new PauseTransition(EXIT_DELAY);
+        delay.setOnFinished(event -> {
+            if (stage != null) {
+                stage.close();
+            }
+            Platform.exit();
+        });
+        delay.play();
     }
 }
