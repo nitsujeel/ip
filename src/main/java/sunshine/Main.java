@@ -22,6 +22,7 @@ public class Main extends Application {
             AnchorPane ap = fxmlLoader.load();
             Scene scene = new Scene(ap);
             stage.setScene(scene);
+            stage.setTitle("Sunshine");
             MainWindow mainWindow = fxmlLoader.getController();
             mainWindow.setStage(stage);
             mainWindow.setSunshine(sunshine); // inject the Sunshine instance
@@ -34,4 +35,3 @@ public class Main extends Application {
         }
     }
 }
-

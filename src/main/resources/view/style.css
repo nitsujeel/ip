@@ -1,0 +1,32 @@
+/* Implemented by ChatGPT Codex */
+
+.root {
+    -fx-background-color: black;
+    -fx-text-fill: white;
+}
+
+.anchor-pane,
+.vbox,
+.scroll-pane,
+.scroll-pane > .viewport {
+    -fx-background-color: #363737;
+}
+
+.label {
+    -fx-text-fill: white;
+}
+
+.text-field {
+    -fx-text-fill: white;
+    -fx-background-color: #1a1a1a;
+    -fx-prompt-text-fill: #aaaaaa;
+}
+
+.button {
+    -fx-text-fill: white;
+    -fx-background-color: #333333;
+}
+
+.dialog-box {
+    -fx-background-color: transparent;
+}

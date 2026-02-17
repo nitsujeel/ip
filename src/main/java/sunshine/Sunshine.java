@@ -31,14 +31,18 @@ public class Sunshine {
             storage.load(taskList);
             return ui.showLoadSuccess(taskList.getTaskCount());
         } catch (FileNotFoundException e) {
-            try {
-                storage.createNewFile();
-                return ui.showLoadNew();
-            } catch (IOException ex) {
-                return ui.showException("creating a new save file", ex);
-            }
+            return handleMissingStorageFile();
         } catch (EmptyDescriptionException | IOException e) {
             return ui.showException("loading your saved tasks", e);
+        }
+    }
+
+    private String handleMissingStorageFile() {
+        try {
+            storage.createNewFile();
+            return ui.showLoadNew();
+        } catch (IOException ex) {
+            return ui.showException("creating a new save file", ex);
         }
     }
 
@@ -67,20 +71,19 @@ public class Sunshine {
         case "list":
             return ui.showList(taskList);
         case "mark":
-            return handleMark(arg, storage, taskList, ui);
+            return handleMark(arg);
         case "unmark":
-            return handleUnmark(arg, storage, taskList, ui);
+            return handleUnmark(arg);
         case "todo":
-            return handleToDo(arg, storage, taskList, ui);
+            return handleToDo(arg);
         case "deadline":
-            return handleDeadline(arg, storage, taskList, ui);
+            return handleDeadline(arg);
         case "event":
-            return handleEvent(arg, storage, taskList, ui);
+            return handleEvent(arg);
         case "delete":
-            return handleDelete(arg, storage, taskList, ui);
+            return handleDelete(arg);
         case "find":
-            TaskList results = taskList.findTasks(arg);
-            return ui.showResults(results);
+            return handleFind(arg);
         case "help":
             return ui.showHelp();
         default:
@@ -88,7 +91,7 @@ public class Sunshine {
         }
     }
 
-    private String handleMark(String arg, Storage storage, TaskList taskList, Ui ui) {
+    private String handleMark(String arg) {
         try {
             int indexMark = Parser.parseInt(arg);
             storage.markEvent(indexMark, taskList.getTaskCount());
@@ -105,7 +108,7 @@ public class Sunshine {
         }
     }
 
-    private String handleUnmark(String arg, Storage storage, TaskList taskList, Ui ui) {
+    private String handleUnmark(String arg) {
         try {
             int indexUnmark = Parser.parseInt(arg);
             storage.unmarkEvent(indexUnmark, taskList.getTaskCount());
@@ -122,7 +125,7 @@ public class Sunshine {
         }
     }
 
-    private String handleToDo(String arg, Storage storage, TaskList taskList, Ui ui) {
+    private String handleToDo(String arg) {
         try {
             ToDo todo = new ToDo(arg);
             storage.addToDo(arg);
@@ -135,7 +138,7 @@ public class Sunshine {
         }
     }
 
-    private String handleDeadline(String arg, Storage storage, TaskList taskList, Ui ui) {
+    private String handleDeadline(String arg) {
         try {
             String[] dlSplits = Parser.parseDeadline(arg);
             Deadline dl = new Deadline(dlSplits[0], dlSplits[1]);
@@ -149,7 +152,7 @@ public class Sunshine {
         }
     }
 
-    private String handleEvent(String arg, Storage storage, TaskList taskList, Ui ui) {
+    private String handleEvent(String arg) {
         try {
             String[] eSplits = Parser.parseEvent(arg);
             Event ev = new Event(eSplits[0], eSplits[1], eSplits[2]);
@@ -163,7 +166,7 @@ public class Sunshine {
         }
     }
 
-    private String handleDelete(String arg, Storage storage, TaskList taskList, Ui ui) {
+    private String handleDelete(String arg) {
         try {
             int indexDelete = Parser.parseInt(arg);
             storage.deleteEvent(indexDelete, taskList.getTaskCount());
@@ -178,5 +181,10 @@ public class Sunshine {
         } catch (IndexOutOfBoundsException | NoSuchElementException e) {
             return ui.showIndexOutofBounds();
         }
+    }
+
+    private String handleFind(String arg) {
+        TaskList results = taskList.findTasks(arg);
+        return ui.showResults(results);
     }
 }

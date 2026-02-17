@@ -17,7 +17,7 @@ import javafx.util.Duration;
  */
 public class MainWindow extends AnchorPane {
 
-    private static final int EXIT_DELAY_SECONDS = 3;
+    private static final Duration EXIT_DELAY = Duration.seconds(3);
 
     @FXML
     private ScrollPane scrollPane;
@@ -30,7 +30,7 @@ public class MainWindow extends AnchorPane {
 
     private Sunshine sunshine;
     private Stage stage;
-    private boolean exitScheduled = false;
+    private boolean isExitScheduled = false;
 
     private Image userImage = new Image(this.getClass().getResourceAsStream("/images/kuromi.jpg"));
     private Image sunshineImage = new Image(this.getClass().getResourceAsStream("/images/pochacco.jpg"));
@@ -76,12 +76,12 @@ public class MainWindow extends AnchorPane {
     }
 
     private void scheduleExitIfBye(String input) {
-        if (exitScheduled || input == null) {
+        if (isExitScheduled || input == null) {
             return;
         }
         if ("bye".equalsIgnoreCase(input.trim())) {
-            exitScheduled = true;
-            PauseTransition delay = new PauseTransition(Duration.seconds(EXIT_DELAY_SECONDS));
+            isExitScheduled = true;
+            PauseTransition delay = new PauseTransition(EXIT_DELAY);
             delay.setOnFinished(event -> {
                 if (stage != null) {
                     stage.close();
