@@ -81,6 +81,7 @@ public class Storage {
      * @throws IOException If file creation is interrupted.
      */
     public void createNewFile() throws IOException {
+        ensureDataDirectoryExists();
         File file = new File(FILE_PATH);
         file.createNewFile();
     }
@@ -92,6 +93,7 @@ public class Storage {
      * @throws IOException If file modification is interrupted.
      */
     public void addToDo(String description) throws IOException {
+        ensureDataDirectoryExists();
         FileWriter fw = new FileWriter(FILE_PATH, true);
         fw.write("T" + System.lineSeparator() + "0" + System.lineSeparator() + description
                 + System.lineSeparator());
@@ -106,6 +108,7 @@ public class Storage {
      * @throws IOException If file modification is interrupted.
      */
     public void addDeadline(String description, String deadline) throws IOException {
+        ensureDataDirectoryExists();
         FileWriter fw = new FileWriter(FILE_PATH, true);
         fw.write("D" + System.lineSeparator() + "0" + System.lineSeparator() + description
                 + System.lineSeparator() + deadline + System.lineSeparator());
@@ -121,6 +124,7 @@ public class Storage {
      * @throws IOException If file modification is interrupted.
      */
     public void addEvent(String description, String from, String to) throws IOException {
+        ensureDataDirectoryExists();
         FileWriter fw = new FileWriter(FILE_PATH, true);
         fw.write("E" + System.lineSeparator() + "0" + System.lineSeparator() + description
                 + System.lineSeparator() + from + System.lineSeparator() + to
@@ -136,6 +140,7 @@ public class Storage {
      * @throws IOException If file modification is interrupted.
      */
     public void deleteEvent(int index, int taskCount) throws IOException {
+        ensureDataDirectoryExists();
         File inputFile = new File(FILE_PATH);
         File tempFile = new File("data" + File.separator + "temp.txt");
         tempFile.createNewFile();
@@ -178,6 +183,7 @@ public class Storage {
      * @throws IOException If file modification is interrupted.
      */
     public void markEvent(int index, int taskCount) throws IOException {
+        ensureDataDirectoryExists();
         File inputFile = new File(FILE_PATH);
         File tempFile = new File("data" + File.separator + "temp.txt");
         tempFile.createNewFile();
@@ -236,6 +242,7 @@ public class Storage {
      * @throws IOException If file modification is interrupted.
      */
     public void unmarkEvent(int index, int taskCount) throws IOException {
+        ensureDataDirectoryExists();
         File inputFile = new File(FILE_PATH);
         File tempFile = new File("data" + File.separator + "temp.txt");
         tempFile.createNewFile();
@@ -310,6 +317,13 @@ public class Storage {
             default:
                 break;
             }
+        }
+    }
+
+    private void ensureDataDirectoryExists() throws IOException {
+        File parent = new File(FILE_PATH).getParentFile();
+        if (parent != null && !parent.exists() && !parent.mkdirs()) {
+            throw new IOException("Unable to create directory for save file at " + parent.getAbsolutePath());
         }
     }
 }
