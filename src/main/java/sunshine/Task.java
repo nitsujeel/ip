@@ -12,8 +12,11 @@ public abstract class Task {
      *
      * @param description Description of the task.
      */
-    public Task(String description) {
+    public Task(String description) throws ImproperFormatException {
         this.description = description;
+        if (description.isBlank()) {
+            throw new ImproperFormatException();
+        }
         this.isDone = false;
     }
 

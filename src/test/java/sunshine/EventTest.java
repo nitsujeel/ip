@@ -1,6 +1,8 @@
 package sunshine;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
 
@@ -9,14 +11,28 @@ public class EventTest {
 
     @Test
     public void toString_newEvent_formatsCorrectly() {
-        Event event = new Event("team sync", "Mon 9am", "Mon 10am");
-        assertEquals("[E][ ] team sync (from: Mon 9am to: Mon 10am)", event.toString());
+        try {
+            Event event = new Event("team sync", "01/05/2026", "02/05/2026");
+            assertEquals("[E][ ] team sync (from: 1 May 2026 to: 2 May 2026)", event.toString());
+        } catch (ImproperFormatException | EndBeforeStartException e) {
+            fail();
+        }
     }
 
     @Test
     public void mark_setsDoneInString() {
-        Event event = new Event("demo day", "Fri 2pm", "Fri 4pm");
-        event.mark();
-        assertEquals("[E][X] demo day (from: Fri 2pm to: Fri 4pm)", event.toString());
+        try {
+            Event event = new Event("demo day", "10/07/2026", "11/07/2026");
+            event.mark();
+            assertEquals("[E][X] demo day (from: 10 Jul 2026 to: 11 Jul 2026)", event.toString());
+        } catch (ImproperFormatException | EndBeforeStartException e) {
+            fail();
+        }
+    }
+
+    @Test
+    public void constructor_endBeforeStart_throwsException() {
+        assertThrows(EndBeforeStartException.class,
+                () -> new Event("invalid", "10/07/2026", "09/07/2026"));
     }
 }

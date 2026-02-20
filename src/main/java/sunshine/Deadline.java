@@ -9,7 +9,6 @@ import java.time.format.DateTimeParseException;
  */
 public class Deadline extends Task {
 
-    protected String byString;
     protected LocalDate byDate;
 
     /**
@@ -18,24 +17,19 @@ public class Deadline extends Task {
      * @param description Description of the task.
      * @param by Deadline of the task.
      */
-    public Deadline(String description, String by) {
+    public Deadline(String description, String by) throws ImproperFormatException, DateTimeParseException {
         super(description);
-        this.byString = by;
         try {
             String[] dates = by.split("/");
             this.byDate = LocalDate.parse(dates[2] + "-" + dates[1] + "-" + dates[0]);
-        } catch (ArrayIndexOutOfBoundsException | DateTimeParseException e) {
-            this.byDate = null;
+        } catch (ArrayIndexOutOfBoundsException e) {
+            throw new ImproperFormatException();
         }
     }
 
     @Override
     public String toString() {
-        if (this.byDate == null) {
-            return "[D]" + super.toString() + " (by: " + byString + ")";
-        } else {
-            return "[D]" + super.toString() + " (by: "
-                    + this.byDate.format(DateTimeFormatter.ofPattern("d MMM yyyy")) + ")";
-        }
+        return "[D]" + super.toString() + " (by: "
+                + this.byDate.format(DateTimeFormatter.ofPattern("d MMM yyyy")) + ")";
     }
 }

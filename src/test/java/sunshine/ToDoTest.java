@@ -2,6 +2,7 @@ package sunshine;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.fail;
 
 import org.junit.jupiter.api.Test;
 
@@ -10,12 +11,16 @@ public class ToDoTest {
 
     @Test
     public void constructor_emptyDescription_throwsException() {
-        assertThrows(EmptyDescriptionException.class, () -> new ToDo(""));
+        assertThrows(ImproperFormatException.class, () -> new ToDo(""));
     }
 
     @Test
-    public void toString_newTask_showsTodoPrefix() throws EmptyDescriptionException {
-        ToDo todo = new ToDo("buy milk");
-        assertEquals("[T][ ] buy milk", todo.toString());
+    public void toString_newTask_showsTodoPrefix() {
+        try {
+            ToDo todo = new ToDo("buy milk");
+            assertEquals("[T][ ] buy milk", todo.toString());
+        } catch (ImproperFormatException e) {
+            fail();
+        }
     }
 }

@@ -2,33 +2,8 @@
 
 ![Screenshot of Sunshine window.](./Ui.png)
 
-## Sunshine
-
-> "Your mind is for having ideas, not holding them." – David Allen ([source](https://dansilvestre.com/productivity-quotes/))
-
-Sunshine frees your mind of having to remember things you need to do. It's,
-
-- text-based
-- easy to learn
-- ~FAST~ _SUPER FAST_ to use
-
-All you need to do is,
-
-1. download it from [here](https://github.com/NUS-CS2103-AY2526-S2/ip/pull/167).
-2. double-click it.
-3. add your tasks.
-4. let it manage your tasks for you 😉
-
-And it is __FREE__!
-
-Features:
-- [x] Managing tasks
-- [x] Managing deadlines
-- [ ] Reminders (coming soon)
-
-## Communicating with Sunshine
-
 Upon starting Sunshine, your locally saved tasks (if any) will be loaded into memory.
+Otherwise, a new save file will be initialised automatically.
 
 Talk and give instructions to Sunshine by typing them in the textbox at the bottom of the GUI,
 and hit enter or click the send button to confirm.
@@ -52,9 +27,9 @@ Now you have 1 task(s) in the list.
 
 ## Adding tasks with deadlines
 
-Some tasks you want to add may have to be finished by a certain time.
+Some tasks you want to add may have to be finished by a certain date.
 
-Example: `deadline Attempt Tutorial 6 /by 11/03/2026` _(Sunshine recognises dates in the format dd/mm/yyyy!)_
+Example: `deadline Attempt Tutorial 6 /by 11/03/2026` _(Sunshine recognises dates in the format DD/MM/YYYY)_
 
 Sunshine replies with the following confirmation.
 [D] indicates this is a Deadline task.
@@ -67,16 +42,16 @@ Now you have 2 task(s) in the list.
 
 ## Adding events
 
-Sunshine can help you keep track of events too.
+Sunshine can help you keep track of events with a start and end date too.
 
-Example: `event Career Fair /from Thursday 3pm /to 6pm`
+Example: `event Career Fair /from 17/04/2026 /to 20/04/2026`
 
 Sunshine replies with the following confirmation.
 [E] indicates this is an Event.
 
 ```
 Got it. I've added this task:
-[E][ ] Career Fair (from: Thursday 3pm to: 6pm)
+[E][ ] Career Fair (from: 17 Apr 2026 to: 20 Apr 2026)
 Now you have 3 task(s) in the list.
 ```
 
@@ -89,13 +64,15 @@ To see all that you've added to your list thus far, simply request Sunshine to
 Here are the tasks in your list:
 1. [T][ ] Go swimming
 2. [D][ ] Attempt Tutorial 6 (by: 11 Mar 2026)
-3. [E][ ] Career Fair (from: Thursday 3pm to: 6pm)
+3. [E][ ] Career Fair (from: 17 Apr 2026 to: 20 Apr 2026)
 ```
 
 ## Marking/Unmarking tasks
 
 Once you've completed a task or finished an event, mark it as completed.
 Made a mistake? Go ahead and unmark it.
+
+[X] indicates a task is marked as completed, while [ ] indicates the task has yet to be marked as completed.
 
 Example: `mark 1` _(Tasks are 1-indexed, as listed by `list`)_
 
@@ -108,7 +85,7 @@ Example: `unmark 1`
 
 ```
 So you lied to me la. I've marked this task as not done yet:
-[T][X] Go swimming
+[T][ ] Go swimming
 ```
 
 ## Deleting tasks
@@ -132,7 +109,7 @@ Example: `find Career Fair`
 
 ```
 Here's what I found, bubs:
-1. [E][ ] Career Fair (from: Thursday 3pm to: 6pm)
+1. [E][ ] Career Fair (from: 17 Apr 2026 to: 20 Apr 2026)
 ```
 
 ## Getting help on commands
@@ -158,5 +135,6 @@ Goodnight, rest well and sweet dreams.
 Hope to see you again soon!
 ```
 
-All tasks are saved locally, ready to be loaded the next time you boot Sunshine up!
+All tasks are automatically saved locally whenever changes are made,
+and they're ready to be loaded the next time you boot Sunshine up!
 

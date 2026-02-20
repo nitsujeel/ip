@@ -2,6 +2,7 @@ package sunshine;
 
 import java.io.FileNotFoundException;
 import java.io.IOException;
+import java.time.format.DateTimeParseException;
 import java.util.NoSuchElementException;
 
 /**
@@ -32,7 +33,7 @@ public class Sunshine {
             return ui.showLoadSuccess(taskList.getTaskCount());
         } catch (FileNotFoundException e) {
             return handleMissingStorageFile();
-        } catch (EmptyDescriptionException | IOException e) {
+        } catch (ImproperFormatException | IOException | EndBeforeStartException e) {
             return ui.showException("loading your saved tasks", e);
         }
     }
@@ -131,7 +132,7 @@ public class Sunshine {
             storage.addToDo(arg);
             taskList.addTask(todo);
             return ui.showAddTaskSuccess(todo, taskList.getTaskCount());
-        } catch (EmptyDescriptionException e) {
+        } catch (ImproperFormatException e) {
             return ui.showToDoFormat();
         } catch (IOException e) {
             return ui.showException("saving this task", e);
@@ -145,10 +146,12 @@ public class Sunshine {
             storage.addDeadline(dlSplits[0], dlSplits[1]);
             taskList.addTask(dl);
             return ui.showAddTaskSuccess(dl, taskList.getTaskCount());
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (ImproperFormatException | ArrayIndexOutOfBoundsException e) {
             return ui.showDeadlineFormat();
         } catch (IOException e) {
             return ui.showException("saving this task", e);
+        } catch (DateTimeParseException e) {
+            return ui.showDateTimeFormat();
         }
     }
 
@@ -159,10 +162,14 @@ public class Sunshine {
             storage.addEvent(eSplits[0], eSplits[1], eSplits[2]);
             taskList.addTask(ev);
             return ui.showAddTaskSuccess(ev, taskList.getTaskCount());
-        } catch (ArrayIndexOutOfBoundsException e) {
+        } catch (ArrayIndexOutOfBoundsException | ImproperFormatException e) {
             return ui.showEventFormat();
         } catch (IOException e) {
             return ui.showException("saving this task", e);
+        } catch (DateTimeParseException e) {
+            return ui.showDateTimeFormat();
+        } catch (EndBeforeStartException e) {
+            return ui.showEndBeforeStartException();
         }
     }
 

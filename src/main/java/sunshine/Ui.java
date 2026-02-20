@@ -69,7 +69,7 @@ public class Ui {
      * Prints a message when the task index is beyond the current task count.
      */
     public String showIndexOutofBounds() {
-        return ERROR_PREFIX + "You don't even have that many tasks, stop gaslighting me.";
+        return ERROR_PREFIX + "That's not a valid task number, stop gaslighting me.";
     }
 
     /**
@@ -110,14 +110,14 @@ public class Ui {
      * Prints a message for failed addition of Deadline to the list.
      */
     public String showDeadlineFormat() {
-        return ERROR_PREFIX + "A Deadline must have a description and a /by.";
+        return ERROR_PREFIX + "A Deadline must have a description and a /by (DD/MM/YYYY).";
     }
 
     /**
      * Prints a message for failed addition of Event to the list.
      */
     public String showEventFormat() {
-        return ERROR_PREFIX + "An Event must have a description, a /from, and a /to.";
+        return ERROR_PREFIX + "An Event must have a description, a /from (DD/MM/YYYY), and a /to (DD/MM/YYYY).";
     }
 
     /**
@@ -163,12 +163,26 @@ public class Ui {
                 + "help\nShow this list of commands\n\n"
                 + "list\nShow your current list of tasks\n\n"
                 + "todo <description>\nAdd a ToDo Task to your list\n\n"
-                + "deadline <description> /by <due>\nAdd a Deadline Task to your list\n\n"
-                + "event <description> /from <start> /to <end>\nAdd an Event Task to your list\n\n"
-                + "mark <index>\nMark the indexed task as done\n\n"
-                + "unmark <index>\nUnmark the indexed task as yet to be done\n\n"
-                + "delete <index>\nDelete the indexed task from your list\n\n"
+                + "deadline <description> /by <due (DD/MM/YYYY)>\nAdd a Deadline Task to your list\n\n"
+                + "event <description> /from <start (DD/MM/YYYY)> /to <end (DD/MM/YYYY)>\nAdd an Event Task to your list\n\n"
+                + "mark <index (1-based)>\nMark the indexed task as done\n\n"
+                + "unmark <index (1-based)>\nUnmark the indexed task as yet to be done\n\n"
+                + "delete <index (1-based)>\nDelete the indexed task from your list\n\n"
                 + "find <keywords>\nSearch your list for tasks that match\n\n"
                 + "bye\nSay goodbye to me!";
+    }
+
+    /**
+     * Prints a message reminding user of the proper date format.
+     */
+    public String showDateTimeFormat() {
+        return ERROR_PREFIX + "Dates must be of the form DD/MM/YYYY, and must be valid dates.";
+    }
+
+    /**
+     * Prints a message reminding user that the end date of an event must be before its start date.
+     */
+    public String showEndBeforeStartException() {
+        return ERROR_PREFIX + "An event's /to date cannot be before it /from date.";
     }
 }

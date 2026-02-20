@@ -18,9 +18,10 @@ public class Storage {
      *
      * @param taskList Destination to load Tasks into.
      * @throws FileNotFoundException If local file does not exist.
-     * @throws EmptyDescriptionException If ToDo tasks are missing a description.
+     * @throws ImproperFormatException If ToDo tasks are missing a description.
      */
-    public void load(TaskList taskList) throws IOException, EmptyDescriptionException {
+    public void load(TaskList taskList)
+            throws IOException, ImproperFormatException, EndBeforeStartException {
         File file = new File(FILE_PATH);
         Scanner scanner = new Scanner(file);
         while (scanner.hasNext()) {
@@ -41,7 +42,7 @@ public class Storage {
         scanner.close();
     }
 
-    private void handleToDoLoad(Scanner scanner, TaskList taskList) throws EmptyDescriptionException {
+    private void handleToDoLoad(Scanner scanner, TaskList taskList) throws ImproperFormatException {
         String tdDone = scanner.nextLine();
         String tdDesc = scanner.nextLine();
         ToDo td = new ToDo(tdDesc);
@@ -51,7 +52,7 @@ public class Storage {
         taskList.addTask(td);
     }
 
-    private void handleDeadlineLoad(Scanner scanner, TaskList taskList) {
+    private void handleDeadlineLoad(Scanner scanner, TaskList taskList) throws ImproperFormatException {
         String dlDone = scanner.nextLine();
         String dlDesc = scanner.nextLine();
         String dlBy = scanner.nextLine();
@@ -62,7 +63,8 @@ public class Storage {
         taskList.addTask(dl);
     }
 
-    private void handleEventLoad(Scanner scanner, TaskList taskList) {
+    private void handleEventLoad(Scanner scanner, TaskList taskList)
+            throws ImproperFormatException, EndBeforeStartException {
         String evDone = scanner.nextLine();
         String evDesc = scanner.nextLine();
         String evFrom = scanner.nextLine();
