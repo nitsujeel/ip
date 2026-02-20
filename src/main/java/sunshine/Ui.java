@@ -59,17 +59,10 @@ public class Ui {
     }
 
     /**
-     * Prints a message when the task index is not specified.
-     */
-    public String showMissingIndex() {
-        return ERROR_PREFIX + "Which one la?";
-    }
-
-    /**
      * Prints a message when the task index is beyond the current task count.
      */
     public String showIndexOutofBounds() {
-        return ERROR_PREFIX + "That's not a valid task number, stop gaslighting me.";
+        return ERROR_PREFIX + "I need a valid task number. Stop gaslighting me!";
     }
 
     /**
@@ -137,7 +130,8 @@ public class Ui {
      * @param taskList List of Tasks found from the search.
      */
     public String showResults(TaskList taskList) {
-        return "Here's what I found, bubs:\n" + taskList.toString();
+        return taskList.getTaskCount() == 0 ? "I couldn't find anything like that..."
+                : "Here's what I found, bubs:\n" + taskList.toString();
     }
 
     /**

@@ -98,9 +98,7 @@ public class Sunshine {
             storage.markEvent(indexMark, taskList.getTaskCount());
             Task markedTask = taskList.markTask(indexMark);
             return ui.showMarkSuccess(markedTask);
-        } catch (NumberFormatException e) {
-            return ui.showMissingIndex();
-        } catch (NullPointerException | ArrayIndexOutOfBoundsException | NoSuchElementException e) {
+        } catch (NumberFormatException | NullPointerException | ArrayIndexOutOfBoundsException | NoSuchElementException e) {
             return ui.showIndexOutofBounds();
         } catch (FileNotFoundException e) {
             return ui.showFileNotFound();
@@ -115,9 +113,7 @@ public class Sunshine {
             storage.unmarkEvent(indexUnmark, taskList.getTaskCount());
             Task unmarkedTask = taskList.unmarkTask(indexUnmark);
             return ui.showUnmarkSuccess(unmarkedTask);
-        } catch (NumberFormatException e) {
-            return ui.showMissingIndex();
-        } catch (NullPointerException | ArrayIndexOutOfBoundsException | NoSuchElementException e) {
+        } catch (NumberFormatException | NullPointerException | ArrayIndexOutOfBoundsException | NoSuchElementException e) {
             return ui.showIndexOutofBounds();
         } catch (FileNotFoundException e) {
             return ui.showFileNotFound();
@@ -179,13 +175,11 @@ public class Sunshine {
             storage.deleteEvent(indexDelete, taskList.getTaskCount());
             Task task = taskList.deleteTask(indexDelete);
             return ui.showDeleteSuccess(task, taskList.getTaskCount());
-        } catch (NumberFormatException e) {
-            return ui.showMissingIndex();
         } catch (FileNotFoundException e) {
             return ui.showFileNotFound();
         } catch (IOException e) {
             return ui.showException("deleting this task", e);
-        } catch (IndexOutOfBoundsException | NoSuchElementException e) {
+        } catch (NumberFormatException | IndexOutOfBoundsException | NoSuchElementException e) {
             return ui.showIndexOutofBounds();
         }
     }

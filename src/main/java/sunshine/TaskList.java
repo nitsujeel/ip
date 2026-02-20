@@ -95,7 +95,7 @@ public class TaskList {
         TaskList result = new TaskList();
         for (int i = 0; i < this.taskCount; i++) {
             Task t = this.list[i];
-            if (t.getDescription().contains(keyword)) {
+            if (t.toString().contains(keyword)) {
                 result.addTask(t);
             }
         }
