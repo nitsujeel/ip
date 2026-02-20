@@ -20,7 +20,7 @@ public class DeadlineTest {
 
     @Test
     public void constructor_invalidFormat_throwsImproperFormatException() {
-        assertThrows(ImproperFormatException.class,
-                () -> new Deadline("deadline description", "2026-04-28"));
+        assertThrows(ImproperFormatException.class, (
+                ) -> new Deadline("deadline description", "2026-04-28"));
     }
 }

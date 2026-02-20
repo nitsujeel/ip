@@ -98,7 +98,8 @@ public class Sunshine {
             storage.markEvent(indexMark, taskList.getTaskCount());
             Task markedTask = taskList.markTask(indexMark);
             return ui.showMarkSuccess(markedTask);
-        } catch (NumberFormatException | NullPointerException | ArrayIndexOutOfBoundsException | NoSuchElementException e) {
+        } catch (NumberFormatException | NullPointerException
+                 | ArrayIndexOutOfBoundsException | NoSuchElementException e) {
             return ui.showIndexOutofBounds();
         } catch (FileNotFoundException e) {
             return ui.showFileNotFound();
@@ -113,7 +114,8 @@ public class Sunshine {
             storage.unmarkEvent(indexUnmark, taskList.getTaskCount());
             Task unmarkedTask = taskList.unmarkTask(indexUnmark);
             return ui.showUnmarkSuccess(unmarkedTask);
-        } catch (NumberFormatException | NullPointerException | ArrayIndexOutOfBoundsException | NoSuchElementException e) {
+        } catch (NumberFormatException | NullPointerException
+                 | ArrayIndexOutOfBoundsException | NoSuchElementException e) {
             return ui.showIndexOutofBounds();
         } catch (FileNotFoundException e) {
             return ui.showFileNotFound();

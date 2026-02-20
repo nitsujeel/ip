@@ -66,8 +66,8 @@ public class DialogBox extends HBox {
         Circle clip = new Circle();
         clip.centerXProperty().bind(displayPicture.fitWidthProperty().divide(2));
         clip.centerYProperty().bind(displayPicture.fitHeightProperty().divide(2));
-        clip.radiusProperty().bind(Bindings.createDoubleBinding(
-                () -> Math.min(displayPicture.getFitWidth(), displayPicture.getFitHeight()) / 2,
+        clip.radiusProperty().bind(Bindings.createDoubleBinding((
+                ) -> Math.min(displayPicture.getFitWidth(), displayPicture.getFitHeight()) / 2,
                 displayPicture.fitWidthProperty(), displayPicture.fitHeightProperty()));
         displayPicture.setClip(clip);
     }

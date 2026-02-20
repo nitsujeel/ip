@@ -40,21 +40,30 @@ public class MainWindow extends AnchorPane {
         scrollPane.vvalueProperty().bind(dialogContainer.heightProperty());
     }
 
-    /** Injects the Sunshine instance */
+    /**
+     * Injects the Sunshine instance
+     * */
     public void setSunshine(Sunshine s) {
         sunshine = s;
     }
 
-    /** Injects the primary stage so we can close it later. */
+    /**
+     * Injects the primary stage so we can close it later.
+     * */
     public void setStage(Stage stage) {
         this.stage = stage;
     }
 
-    /** Shows Sunshine's first message when the app starts. */
+    /**
+     * Shows the success/failure to load locally saved tasks.
+     */
     public void showLoadResult(String loadResultString) {
         dialogContainer.getChildren().add(DialogBox.getSunshineDialog(loadResultString, sunshineImage));
     }
 
+    /**
+     * Shows Sunshine's welcome message when the app starts.
+     * */
     public void showWelcome() {
         dialogContainer.getChildren().add(DialogBox.getSunshineDialog(sunshine.getWelcomeMessage(), sunshineImage));
     }

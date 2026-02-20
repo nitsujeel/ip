@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 /**
- * A task with a start and end time.
+ * A task with a start and end date.
  */
 public class Event extends Task {
 
@@ -37,7 +37,7 @@ public class Event extends Task {
 
     @Override
     public String toString() {
-        return "[E]" + super.toString() + " (from: " + this.from.format(DateTimeFormatter.ofPattern("d MMM yyyy")) +
-                " to: " + this.to.format(DateTimeFormatter.ofPattern("d MMM yyyy")) + ")";
+        return "[E]" + super.toString() + " (from: " + this.from.format(DateTimeFormatter.ofPattern("d MMM yyyy"))
+                + " to: " + this.to.format(DateTimeFormatter.ofPattern("d MMM yyyy")) + ")";
     }
 }

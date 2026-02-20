@@ -32,7 +32,7 @@ public class EventTest {
 
     @Test
     public void constructor_endBeforeStart_throwsException() {
-        assertThrows(EndBeforeStartException.class,
-                () -> new Event("invalid", "10/07/2026", "09/07/2026"));
+        assertThrows(EndBeforeStartException.class, (
+                ) -> new Event("invalid", "10/07/2026", "09/07/2026"));
     }
 }

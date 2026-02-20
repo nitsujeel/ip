@@ -20,10 +20,6 @@ public abstract class Task {
         this.isDone = false;
     }
 
-    public String getDescription() {
-        return this.description;
-    }
-
     private String getStatusIcon() {
         return (this.isDone ? "X" : " ");
     }

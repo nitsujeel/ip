@@ -5,7 +5,7 @@ import java.time.format.DateTimeFormatter;
 import java.time.format.DateTimeParseException;
 
 /**
- * A task with a due time.
+ * A task with a due date.
  */
 public class Deadline extends Task {
 
