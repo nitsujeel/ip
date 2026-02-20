@@ -72,7 +72,7 @@ public class TaskList {
         }
         this.list[this.taskCount - 1] = null;
         this.taskCount--;
-        assert (this.taskCount >= 0) : "Task count should not be negative";
+        assert this.taskCount >= 0 : "Task count should not be negative";
         return task;
     }
 
